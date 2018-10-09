@@ -7,7 +7,7 @@
 #include "Poker.hpp"
 #include "Slots.hpp"
 #include "Account.hpp"
-#include "Game.hpp"
+
 
 using std::cout;
 using std::cin;
@@ -25,8 +25,6 @@ int main()
 	Account *user;
 	Account userinfo;
 	user = &userinfo;
-
-	Game Casino;
 
 	bool verified = false;
 	bool running = false;
@@ -82,7 +80,6 @@ int main()
 		if (verified)
 		{
 			cout << "Welcome back to the Casino " << user << endl;
-			Casino.startGame(user);
 			running = true;
 		}
 	}

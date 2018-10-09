@@ -8,7 +8,6 @@ class Casino
 public:
 	Casino();
 
-	static double balance;
 
 	void getUserInfo(); // Retrieve user information => Balance and name
 	void setUserBalance(double balance);  // Set user's balance

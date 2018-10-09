@@ -1,6 +1,5 @@
 #include "Casino.hpp"
 
-double Casino::balance;
 
 Casino::Casino()
 {

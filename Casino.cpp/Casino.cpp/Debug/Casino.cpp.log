@@ -1,5 +1,39 @@
-﻿  Game.cpp
+﻿  Account.cpp
+c:\users\ryan\desktop\casino\casino.cpp\casino.cpp\account.hpp(22): warning C4584: 'Account': base-class 'Casino' is already a base-class of 'Slots'
+  c:\users\ryan\desktop\casino\casino.cpp\casino.cpp\casino.hpp(6): note: see declaration of 'Casino'
+  c:\users\ryan\desktop\casino\casino.cpp\casino.cpp\slots.hpp(6): note: see declaration of 'Slots'
+  BlackjackRoom.cpp
+c:\users\ryan\desktop\casino\casino.cpp\casino.cpp\account.hpp(22): warning C4584: 'Account': base-class 'Casino' is already a base-class of 'Slots'
+  c:\users\ryan\desktop\casino\casino.cpp\casino.cpp\casino.hpp(6): note: see declaration of 'Casino'
+  c:\users\ryan\desktop\casino\casino.cpp\casino.cpp\slots.hpp(6): note: see declaration of 'Slots'
+  Game.cpp
+c:\users\ryan\desktop\casino\casino.cpp\casino.cpp\account.hpp(22): warning C4584: 'Account': base-class 'Casino' is already a base-class of 'Slots'
+  c:\users\ryan\desktop\casino\casino.cpp\casino.cpp\casino.hpp(6): note: see declaration of 'Casino'
+  c:\users\ryan\desktop\casino\casino.cpp\casino.cpp\slots.hpp(6): note: see declaration of 'Slots'
+c:\users\ryan\desktop\casino\casino.cpp\casino.cpp\game.cpp(47): error C2385: ambiguous access of 'getUserBalance'
+  c:\users\ryan\desktop\casino\casino.cpp\casino.cpp\game.cpp(47): note: could be the 'getUserBalance' in base 'Casino'
+  c:\users\ryan\desktop\casino\casino.cpp\casino.cpp\game.cpp(47): note: or could be the 'getUserBalance' in base 'Casino'
+c:\users\ryan\desktop\casino\casino.cpp\casino.cpp\game.cpp(52): error C2385: ambiguous access of 'buyDrink'
+  c:\users\ryan\desktop\casino\casino.cpp\casino.cpp\game.cpp(52): note: could be the 'buyDrink' in base 'Casino'
+  c:\users\ryan\desktop\casino\casino.cpp\casino.cpp\game.cpp(52): note: or could be the 'buyDrink' in base 'Casino'
+  Lobby.cpp
+c:\users\ryan\desktop\casino\casino.cpp\casino.cpp\account.hpp(22): warning C4584: 'Account': base-class 'Casino' is already a base-class of 'Slots'
+  c:\users\ryan\desktop\casino\casino.cpp\casino.cpp\casino.hpp(6): note: see declaration of 'Casino'
+  c:\users\ryan\desktop\casino\casino.cpp\casino.cpp\slots.hpp(6): note: see declaration of 'Slots'
   Main.cpp
+c:\users\ryan\desktop\casino\casino.cpp\casino.cpp\account.hpp(22): warning C4584: 'Account': base-class 'Casino' is already a base-class of 'Slots'
+  c:\users\ryan\desktop\casino\casino.cpp\casino.cpp\casino.hpp(6): note: see declaration of 'Casino'
+  c:\users\ryan\desktop\casino\casino.cpp\casino.cpp\slots.hpp(6): note: see declaration of 'Slots'
+  PokerRoom.cpp
+c:\users\ryan\desktop\casino\casino.cpp\casino.cpp\account.hpp(22): warning C4584: 'Account': base-class 'Casino' is already a base-class of 'Slots'
+  c:\users\ryan\desktop\casino\casino.cpp\casino.cpp\casino.hpp(6): note: see declaration of 'Casino'
+  c:\users\ryan\desktop\casino\casino.cpp\casino.cpp\slots.hpp(6): note: see declaration of 'Slots'
   SlotsRoom.cpp
+c:\users\ryan\desktop\casino\casino.cpp\casino.cpp\account.hpp(22): warning C4584: 'Account': base-class 'Casino' is already a base-class of 'Slots'
+  c:\users\ryan\desktop\casino\casino.cpp\casino.cpp\casino.hpp(6): note: see declaration of 'Casino'
+  c:\users\ryan\desktop\casino\casino.cpp\casino.cpp\slots.hpp(6): note: see declaration of 'Slots'
+  area.cpp
+c:\users\ryan\desktop\casino\casino.cpp\casino.cpp\account.hpp(22): warning C4584: 'Account': base-class 'Casino' is already a base-class of 'Slots'
+  c:\users\ryan\desktop\casino\casino.cpp\casino.cpp\casino.hpp(6): note: see declaration of 'Casino'
+  c:\users\ryan\desktop\casino\casino.cpp\casino.cpp\slots.hpp(6): note: see declaration of 'Slots'
   Generating Code...
-  Casino.cpp.vcxproj -> C:\Users\Ryan\Desktop\CASINO\Casino.cpp\Debug\Casino.cpp.exe
