@@ -116,24 +116,30 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Account.cpp" />
+    <ClCompile Include="Bar.cpp" />
     <ClCompile Include="Blackjack.cpp" />
+    <ClCompile Include="BlackjackRoom.cpp" />
     <ClCompile Include="Casino.cpp" />
     <ClCompile Include="CasinoGame.cpp" />
     <ClCompile Include="CasinoLobby.cpp" />
     <ClCompile Include="Location.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Poker.cpp" />
+    <ClCompile Include="PokerRoom.cpp" />
     <ClCompile Include="Slots.cpp" />
     <ClCompile Include="SlotsRoom.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Account.hpp" />
+    <ClInclude Include="Bar.hpp" />
     <ClInclude Include="Blackjack.hpp" />
+    <ClInclude Include="BlackjackRoom.hpp" />
     <ClInclude Include="Casino.hpp" />
     <ClInclude Include="CasinoGame.hpp" />
     <ClInclude Include="CasinoLobby.hpp" />
     <ClInclude Include="Location.hpp" />
     <ClInclude Include="Poker.hpp" />
+    <ClInclude Include="PokerRoom.hpp" />
     <ClInclude Include="Slots.hpp" />
     <ClInclude Include="SlotsRoom.hpp" />
   </ItemGroup>

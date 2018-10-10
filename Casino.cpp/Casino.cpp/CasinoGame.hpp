@@ -5,13 +5,15 @@
 
 #include "CasinoLobby.hpp"
 #include "SlotsRoom.hpp"
+#include "PokerRoom.hpp"
+#include "BlackjackRoom.hpp"
+#include "Bar.hpp"
 
 #include "Blackjack.hpp"
 #include "Poker.hpp"
 #include "Slots.hpp"
 #include "Account.hpp"
 #include "Location.hpp"
-
 
 using std::cout;
 using std::cin;

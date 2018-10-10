@@ -2,15 +2,27 @@
 
 CasinoGame::CasinoGame()
 {
-
-
 	Location *lobby_room = new CasinoLobby();
 	Location *slots_room = new SlotsRoom();
+	Location *poker_room = new PokerRoom();
+	Location *blackjack_room = new BlackjackRoom();
+	Location *bar_room = new Bar();
 
-	currentRoom = startingRoom = lobby_room;
+	currentRoom = startingRoom = lobby_room; // Current Room and Starting Room is the Casino lobby
 
-	lobby_room->right = slots_room;
-	slots_room->left = lobby_room;
+	lobby_room->bottom = slots_room; // Going down from the lobby leads to slots room
+	
+	slots_room->left = blackjack_room; // Going left from slots room leads to Blackjack Tables
+	slots_room->right = poker_room; // Going right from slots room leads to Poker room
+	slots_room->bottom = bar_room; // Going down from slots room leads to bar
+	slots_room->top = lobby_room; // Going up from slots room leads to Casino lobby
+
+	blackjack_room->right = slots_room; // Going right from blackjack room leads slots room
+
+	poker_room->left = slots_room; // Going left from poker room leads to slots room
+
+	bar_room->top = slots_room; // Going up from bar room leads to slots room
+
 }
 
 void CasinoGame::startGame(Account *user)
@@ -145,11 +157,11 @@ void CasinoGame::printMap()
 	cout << "|  |            |______|             |__________|               |   |" << endl;
 	cout << "|  |                                                            |   |" << endl;
 	cout << "|  |  BLACKJACK           SLOTS ROOM                POKER ROOM  |   |" << endl;
-	cout << "|  |    ROOM                              _____                 |   |" << endl;
-	cout << "|  |              ______                 |     |                |   |" << endl;
-	cout << "|  |             |     _|                |___  |________________|   |" << endl;
+	cout << "|  |    ROOM                           _________                |   |" << endl;
+	cout << "|  |              ______              |         |               |   |" << endl;
+	cout << "|  |             |     _|             |_______  |_______________|   |" << endl;
 	cout << "|  |             |    |                      |                      |" << endl;
-	cout << "|  |             |    |         BAR          |                      |" << endl;
+	cout << "|  |             |    |      BAR             |                      |" << endl;
 	cout << "|  |_____________|    |______________________|                      |" << endl;
 	cout << "|                                                                   |" << endl;
 	cout << "|                                                                   |" << endl;
