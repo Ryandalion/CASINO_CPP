@@ -54,6 +54,9 @@
     <ClCompile Include="Bar.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="InputValidate.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Casino.hpp">
@@ -90,6 +93,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Bar.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="InputValidate.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

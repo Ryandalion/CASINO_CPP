@@ -29,16 +29,18 @@ void CasinoGame::startGame(Account *user)
 {
 	int userSelection = 0;
 	bool running = false;
+	Validate userInput;
 
 	while (running != true)
 	{
+		cout << endl;
 		cout << "Please select an option" << endl;
 		cout << "1. Travel" << endl;
 		cout << "2. Play game in the room " << endl;
 		cout << "3. Check Balance" << endl;
 		cout << "4. View Map" << endl;
 		cout << "5. Exit Casino" << endl;
-		userSelection = validate(1, 5);
+		userSelection = userInput.inputValidate(1, 5);
 
 		switch (userSelection)
 		{
@@ -112,34 +114,9 @@ Location *CasinoGame::travel()
 	}
 
 
-	int userSelection = validate(1, count);
+	int userSelection = userInput.inputValidate(1, count);
 
 	return rooms[userSelection - 1];
-}
-
-
-int CasinoGame::validate(int min, int max)
-{
-	int temp = 0;
-
-	cin >> temp;
-	while (temp < min || temp > max || cin.fail())
-	{
-		if (cin.fail())
-		{
-			std::cin.clear();
-			cin.ignore(numeric_limits<streamsize>::max(), '\n');
-			cout << "Enter a valid input: ";
-		}
-
-		else
-		{
-			cout << "Enter a valid input (" << min << " - " << max << "): ";
-		}
-
-		cin >> temp;
-	}
-	return temp;
 }
 
 void CasinoGame::printMap()
@@ -153,7 +130,7 @@ void CasinoGame::printMap()
 	cout << "|                 |                          |   _______________    |" << endl;
 	cout << "|                 |          LOBBY           |  |               |   |" << endl;
 	cout << "|                 |                          |  |               |   |" << endl;
-	cout << "|   ____________  |_____              _______|  |               |   |" << endl;
+	cout << "|   ____________  |____               _______|  |               |   |" << endl;
 	cout << "|  |            |______|             |__________|               |   |" << endl;
 	cout << "|  |                                                            |   |" << endl;
 	cout << "|  |  BLACKJACK           SLOTS ROOM                POKER ROOM  |   |" << endl;

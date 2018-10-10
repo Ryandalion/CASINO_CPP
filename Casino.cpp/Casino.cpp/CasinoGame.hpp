@@ -14,13 +14,12 @@
 #include "Slots.hpp"
 #include "Account.hpp"
 #include "Location.hpp"
+#include "InputValidate.hpp"
 
 using std::cout;
 using std::cin;
 using std::endl;
 using std::string;
-using std::numeric_limits;
-using std::streamsize;
 using std::vector;
 
 #ifndef CasinoGame_H
@@ -35,7 +34,7 @@ public:
 	void startGame(Account *user);
 	void printMap();
 	Location *travel();
-	int validate(int min, int max);
+	Validate userInput;
 	~CasinoGame();
 };
 

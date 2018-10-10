@@ -122,6 +122,7 @@
     <ClCompile Include="Casino.cpp" />
     <ClCompile Include="CasinoGame.cpp" />
     <ClCompile Include="CasinoLobby.cpp" />
+    <ClCompile Include="InputValidate.cpp" />
     <ClCompile Include="Location.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Poker.cpp" />
@@ -137,6 +138,7 @@
     <ClInclude Include="Casino.hpp" />
     <ClInclude Include="CasinoGame.hpp" />
     <ClInclude Include="CasinoLobby.hpp" />
+    <ClInclude Include="InputValidate.hpp" />
     <ClInclude Include="Location.hpp" />
     <ClInclude Include="Poker.hpp" />
     <ClInclude Include="PokerRoom.hpp" />
