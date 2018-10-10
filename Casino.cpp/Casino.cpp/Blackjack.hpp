@@ -6,6 +6,10 @@
 class Blackjack : public Casino
 {
 public:
+	Blackjack();
+	
+	~Blackjack();
+
 private:
 
 };

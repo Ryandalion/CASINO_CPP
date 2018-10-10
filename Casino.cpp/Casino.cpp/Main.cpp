@@ -1,13 +1,10 @@
 #include <iostream>
 #include <string>
 #include <limits>
+#include <vector>
 
-
-#include "Blackjack.hpp"
-#include "Poker.hpp"
-#include "Slots.hpp"
 #include "Account.hpp"
-
+#include "CasinoGame.hpp"
 
 using std::cout;
 using std::cin;
@@ -26,9 +23,11 @@ int main()
 	Account userinfo;
 	user = &userinfo;
 
+	CasinoGame begin;
+
 	bool verified = false;
 	bool running = false;
-	
+
 	while (running != true)
 	{
 		cout << "Welcome to C++ Casino" << endl; // Greeting message
@@ -79,12 +78,17 @@ int main()
 
 		if (verified)
 		{
-			cout << "Welcome back to the Casino " << user << endl;
-			running = true;
-		}
-	}
-	delete user;
-	system("pause");
+			int userSelection = 0;
+			user->setName(username);
+			begin.startGame(user);
 
-	return 0;
+		}
+		user = NULL;
+		delete user;
+
+		system("pause");
+
+		return 0;
+	}
 }
+

@@ -1,14 +1,15 @@
 #include "Slots.hpp"
-#include <iostream>
-using namespace std;
+
+
 Slots::Slots()
 {
 
 }
 
-void Slots::printMessage()
+void Slots::startSlots(Account *user)
 {
-	cout << "SLOT MACHINE" << endl;
+	cout << "Starting up slot machine" << endl;
+	cout << "USERNAME " << user->getName() << endl;
 }
 
 Slots::~Slots()

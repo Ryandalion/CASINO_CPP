@@ -28,6 +28,7 @@ public:
 	void verifyUser(string name, string password, int option, bool &verified); // Check user credentials to verify they are a member
 	bool checkUser(string name);
 	void checkPassword(string password);
+	string getName();
 	void verifyUser(string name);
 	bool createAccount(string name,string password);
 	bool loadDeposit(double deposit);

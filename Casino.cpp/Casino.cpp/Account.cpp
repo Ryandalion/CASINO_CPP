@@ -9,9 +9,9 @@ Account::Account()
 	passwordFlag = false;
 }
 
-void Account::setName(string name)
+void Account::setName(string username)
 {
-	this->name = name;
+	this->name = username;
 }
 
 void Account::setPassword(string password)
@@ -201,4 +201,9 @@ void Account::verifyUser(string name)
 Account::~Account()
 {
 
+}
+
+string Account::getName()
+{
+	return name;
 }
