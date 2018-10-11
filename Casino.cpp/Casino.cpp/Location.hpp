@@ -2,6 +2,7 @@
 #include <string>
 
 #include "Account.hpp"
+#include "InputValidate.hpp"
 
 using std::string;
 
