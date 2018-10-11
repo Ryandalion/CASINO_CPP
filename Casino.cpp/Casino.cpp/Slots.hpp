@@ -9,9 +9,15 @@ class Slots
 public:
 	Slots();
 	void startSlots(Account *user);
+	void setCredits(Account *user);
+	double getCredits();
 	~Slots();
-private:
 
+private:
+	double credits;
+	double totalBet;
+	int	numLines;
+	int betsPerLine;
 };
 
 #endif

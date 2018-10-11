@@ -36,7 +36,7 @@ void CasinoGame::startGame(Account *user)
 		cout << endl;
 		cout << "Please select an option" << endl;
 		cout << "1. Travel" << endl;
-		cout << "2. Play game in the room " << endl;
+		cout << "2. Check Loans " << endl;
 		cout << "3. Check Balance" << endl;
 		cout << "4. View Map" << endl;
 		cout << "5. Exit Casino" << endl;
@@ -54,7 +54,7 @@ void CasinoGame::startGame(Account *user)
 
 			case 2:
 			{
-				cout << "Play game in the room" << endl;
+				cout << "Check Loan status" << endl;
 				break;
 			}
 
@@ -74,6 +74,7 @@ void CasinoGame::startGame(Account *user)
 
 			case 5:
 			{
+				// Save all user data via the Casino function saveUserData();
 				running = true;
 			}
 

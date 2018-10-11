@@ -24,11 +24,11 @@ void Bar::enter(Account *user)
 			cout << "|-------= MENU =-------|" << endl;
 			cout << "|======================|" << endl;
 			cout << "|--------DRINKS--------|" << endl;
-			cout << "|1. Whiskey -------- $7|" << endl; // Increased payout by 5% => No luck added
-			cout << "|2. Beer    -------- $4|" << endl; // Increase winning by 10%
-			cout << "|3. Gin and Tonic -- $9|" << endl; // Increase loss rate by 10% => Increase payout by 15%
-			cout << "|4. Wine    ---------$8|" << endl; // Increase winning by 5%
-			cout << "|5. Redbull ---------$4|" << endl;  // Increase winning by 5%
+			cout << "|1. Whiskey -------- $7|" << endl; 
+			cout << "|2. Beer    -------- $4|" << endl; 
+			cout << "|3. Gin and Tonic -- $9|" << endl; 
+			cout << "|4. Wine    ---------$8|" << endl;
+			cout << "|5. Redbull ---------$4|" << endl; 
 			cout << "++++++++++++++++++++++++" << endl;
 			cout << endl;
 			cout << "Which beverage would you like to purchase?" << endl;
@@ -52,30 +52,40 @@ void Bar::beverageChoice(int beverage, Account *user)
 		case 1: 
 		{
 			cout << "You chose whiskey" << endl;
+			user->setUserLuck(4);
+			user->setUserMisfortune(2);
 			break;
 		}
 
 		case 2:
 		{
 			cout << "You chose beer" << endl;
+			user->setUserLuck(3);
+			user->setUserMisfortune(1);
 			break;
 		}
 
 		case 3:
 		{
 			cout << "You chose Gin and Tonic" << endl;
+			user->setUserLuck(5);
+			user->setUserMisfortune(3);
 			break;
 		} 
 
 		case 4:
 		{
 			cout << "You chose Wine" << endl;
+			user->setUserLuck(5);
+			user->setUserMisfortune(1);
 			break;
 		}
 
 		case 5:
 		{
 			cout << "You chose Redbull" << endl;
+			user->setUserLuck(6);
+			user->setUserMisfortune(3);
 			break;
 		}
 	}

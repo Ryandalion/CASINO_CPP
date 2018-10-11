@@ -15,6 +15,7 @@ using std::streamsize;
 
 int main()
 {
+	srand(time(NULL));
 	int choice = 0; // User intial choice
 	string username;
 	string password;
@@ -83,6 +84,7 @@ int main()
 			begin.startGame(user);
 
 		}
+
 		user = NULL;
 		delete user;
 
