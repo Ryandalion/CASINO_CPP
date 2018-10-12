@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <vector>
 
 #include "Casino.hpp"
 
@@ -12,6 +13,7 @@ using std::string;
 using std::endl;
 using std::getline;
 using std::ofstream;
+using std::vector;
 
 #ifndef ACCOUNT_H
 #define ACCOUNT_H
@@ -28,6 +30,11 @@ public:
 	void verifyUser(string name, string password, int option, bool &verified); // Check user credentials to verify they are a member
 	bool checkUser(string name);
 	void checkPassword(string password);
+	
+	void borrowMoney(Account *user);
+	void setUserLoanAmount(int number, Account *user);
+	void getUserLoanAmount(Account *user);
+
 	string getName();
 	void verifyUser(string name);
 	bool createAccount(string name,string password);
@@ -41,6 +48,9 @@ private:
 	double balance;
 	bool accountFlag;
 	bool passwordFlag;
+
+	double loanAmount;
+	int numOfLoans;
 };
 
 

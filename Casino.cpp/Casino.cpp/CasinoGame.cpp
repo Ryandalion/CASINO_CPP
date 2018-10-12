@@ -36,7 +36,7 @@ void CasinoGame::startGame(Account *user)
 		cout << endl;
 		cout << "Please select an option" << endl;
 		cout << "1. Travel" << endl;
-		cout << "2. Check Loans " << endl;
+		cout << "2. Manage Loans" << endl;
 		cout << "3. Check Balance" << endl;
 		cout << "4. View Map" << endl;
 		cout << "5. Exit Casino" << endl;
@@ -54,7 +54,19 @@ void CasinoGame::startGame(Account *user)
 
 			case 2:
 			{
-				cout << "Check Loan status" << endl;
+				int option = 0;
+				cout << "MANAGE LOANS" << endl;
+				cout << "1. Take out loan" << endl;
+				cout << "2. Check loan balance" << endl;
+				option = userInput.inputValidate(1, 2);
+				if (option == 1)
+				{
+					user->borrowMoney(user);
+				}
+				else if (option == 2)
+				{
+					user->getUserLoanAmount(user);
+				}
 				break;
 			}
 

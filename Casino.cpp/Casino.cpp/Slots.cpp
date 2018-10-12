@@ -15,7 +15,7 @@ void Slots::startSlots(Account *user)
 	setCredits(user); // Set the credits
 }
 
-void Slots::setCredits( Account* user)
+void Slots::setCredits(Account* user)
 {
 	int inputAmount = 0;
 	Validate validate;

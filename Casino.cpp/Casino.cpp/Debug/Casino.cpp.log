@@ -1,2 +1,3 @@
-﻿  Slots.cpp
+﻿  Account.cpp
+c:\users\ryan\desktop\casino\casino.cpp\casino.cpp\account.cpp(334): warning C4018: '<': signed/unsigned mismatch
   Casino.cpp.vcxproj -> C:\Users\Ryan\Desktop\CASINO\Casino.cpp\Debug\Casino.cpp.exe
