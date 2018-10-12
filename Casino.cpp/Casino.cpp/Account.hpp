@@ -2,6 +2,7 @@
 #include <fstream>
 #include <string>
 #include <vector>
+#include <sstream>
 
 #include "Casino.hpp"
 
@@ -38,7 +39,9 @@ public:
 	string getName();
 	void verifyUser(string name);
 	bool createAccount(string name,string password);
-	bool loadDeposit(double deposit);
+	bool loadDeposit(double deposit, string name);
+
+	void saveUserData(Account *user);
 	
 	~Account();
 

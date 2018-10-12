@@ -82,6 +82,7 @@ int main()
 			int userSelection = 0;
 			user->setName(username);
 			begin.startGame(user);
+			cout << "Thank you " << username << " we hope to see you soon!" << endl;
 
 		}
 

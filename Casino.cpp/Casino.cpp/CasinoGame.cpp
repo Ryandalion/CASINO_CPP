@@ -86,8 +86,9 @@ void CasinoGame::startGame(Account *user)
 
 			case 5:
 			{
-				// Save all user data via the Casino function saveUserData();
+				user->saveUserData(user);
 				running = true;
+				break;
 			}
 
 		}

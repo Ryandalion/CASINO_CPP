@@ -13,9 +13,36 @@ Casino::Casino()
 	int numOfLoans = 0;
 }
 
-void Casino::getUserInfo() // Pull user data from .dat file and sync to all necessary member components => Execute and sync after user successful login
-{
 
+void Casino::getUserInfo(string name) // This function executes if user passes validation. It gathers the user's account balance and intializes it to their account.
+{
+	ifstream getData; // Input file stream object to gather user's data from .dat files
+	vector<string>userData; // Vector to hold the user's information (string)
+
+	getData.open("accountBalance.dat"); // Open the accountBalance.dat file to retrieve the user's balance
+
+	if (!getData.eof()) // Keep reading the file until we encounter EOF - END OF FILE
+	{
+		std::string data; // Create a string variable to hold the data that will be extracted from the .dat file
+
+		while (getData >> data) // We continue gathering data if more data exists in the .dat file
+		{
+			userData.push_back(data); // Add the extracted data to the userData vector
+		}
+	}
+	getData.close(); // Close input file stream object
+
+	string balance; 
+
+	for (unsigned int i = 0; i < userData.size() - 1; i++) // Sift through data until we encounter user's name, then extract data one element after the index
+	{
+		if (name == userData[i]) // If the name is found within the vector
+		{
+			balance = userData[i + 1]; // Retrieve the balance that is one element after the user's name
+		}
+	}
+
+	totalBalance = stod(balance); // Convert the balance from a string to a double using stod. Then we set totalBalance equal to the converted balance
 }
 
 void Casino::setUserBalance(double balance)
@@ -134,10 +161,6 @@ double Casino::getWinningsForSession()
 	return winningPerSession;
 }
 
-void Casino::saveUserData()
-{
-
-}
 
 Casino::~Casino()
 {

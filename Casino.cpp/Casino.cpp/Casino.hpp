@@ -2,6 +2,8 @@
 #include <ctime>
 #include <fstream>
 #include <vector>
+#include <string>
+#include <sstream>
 
 #include "InputValidate.hpp"
 
@@ -9,6 +11,10 @@ using std::cout;
 using std::cin;
 using std::endl;
 using std::ofstream;
+using std::ifstream;
+using std::vector;
+using std::string;
+
 
 #ifndef CASINO_H
 #define CASINO_H
@@ -19,7 +25,7 @@ public:
 	Casino();
 	//----------------Get User Information------------------------------
 
-	void getUserInfo(); // Retrieve user information => Balance and name
+	void getUserInfo(string name); // Retrieve user information => Balance and name
 	void setUserBalance(double balance);  // Set user's balance
 	void setUserWinnings(double winnings); // Set user's winnings
 	void setUserLosses(double losses);   // Set user's losses
@@ -28,7 +34,7 @@ public:
 
 	//-------------------Character Stats Functions------------------------
 
-	void saveUserData(); // Save all user data => Balance, outstanding loans & number of loans, total winnings => save all into .dat file
+	
 	void tipDealer(); // Tip the dealer
 	void setUserLuck(int luckAmount); // Set the amount of luck the user has
 	int getUserLuck(); // The amount of luck the user has based upon the drinks they consumed
@@ -43,14 +49,15 @@ public:
 
 	~Casino();
 
-
 private:
-	double totalBalance;
+	
 	double sessionWinnings;
 	double totalUserWinnings;
 	double totalUserLosses;
 	double userWinnings;
 	double winningPerSession;
+	double totalBalance;
+
 	int luck;
 	int misfortune;
 };

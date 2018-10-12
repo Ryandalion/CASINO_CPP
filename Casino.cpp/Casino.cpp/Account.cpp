@@ -15,6 +15,11 @@ void Account::setName(string username)
 	this->name = username;
 }
 
+string Account::getName()
+{
+	return name;
+}
+
 void Account::setPassword(string password)
 {
 	this->password = password;
@@ -33,6 +38,7 @@ void Account::verifyUser(string name, string password, int option, bool &verifie
 		checkPassword(password);
 		if (accountFlag && passwordFlag)
 		{
+			getUserInfo(name);
 			cout << "Login Successful" << endl;
 			cout << "Welcome back " << name << endl;
 			verified = true;
@@ -47,6 +53,7 @@ void Account::verifyUser(string name, string password, int option, bool &verifie
 
 	if (option == 2) // Create new user ID
 	{
+		string userName;
 		bool tryAgain = false; // Bool to allow while loop to continue until user enters a username that is not taken
 		while (tryAgain != true)
 		{
@@ -56,8 +63,8 @@ void Account::verifyUser(string name, string password, int option, bool &verifie
 				tryAgain = true;
 				if (createAccount(name, password))
 				{
-					double deposit = 0;
-
+					double deposit;
+					userName = name;
 					cout << "Account creation successful" << endl;
 					cout << "In order to proceed forward you must make an initial deposit into your account" << endl;
 					cout << "Please enter the deposit amount (minimum $100): ";
@@ -67,7 +74,7 @@ void Account::verifyUser(string name, string password, int option, bool &verifie
 						cout << "Deposit must be at least $100" << endl;
 						cin >> deposit;
 					}
-					if (loadDeposit(deposit))
+					if (loadDeposit(deposit, userName))
 					{
 						initialBalance(deposit);
 						cout << "Here are your account details" << endl;
@@ -129,9 +136,9 @@ bool Account::createAccount(string name, string password)
 
 	userNameFile.open("userName.dat", fstream::app | std::ios_base::out); // Create/open .dat file that holds usernames
 	passWordFile.open("passWord.dat", fstream::app | std::ios_base::out); // Create/open .dat file that holds passwords
-
+	
 	userNameFile << name << endl;	// Input username into userName.dat
-	passWordFile << password << endl; // Input password into passDord.dat
+	passWordFile << password << endl << endl; // Input password into passDord.dat
 
 	userNameFile.close(); // Close userNameFile object
 	passWordFile.close(); // Close passWordFile object
@@ -139,17 +146,24 @@ bool Account::createAccount(string name, string password)
 	return true;
 }
 
-bool Account::loadDeposit(double deposit)
+bool Account::loadDeposit(double deposit, string name) // Load the user's deposit into the accountBalance file
 {
-	ofstream initialDeposit;
+	string depositAmount; // Deposit amount is converted to a string so we can store in .dat file and read easily via a string vector
+	double userDeposit = deposit;	// Convert the deposit (double) into a string so it can be stored into the .dat file
+	std::stringstream ss; // Convert the deposit amount (double) to a string
+	ss << userDeposit << endl; 
+	depositAmount = ss.str(); // Set variable depositAmount (string) equal to the converted double
 
-	initialDeposit.open("accountBalance.dat", fstream::app | std::ios_base::out);
+	ofstream initialDeposit; // Create output file stream object to write to the accountBalance file
 
-	initialDeposit << deposit;
+	initialDeposit.open("accountBalance.dat", fstream::app | std::ios_base::out); // Open the accountBalance.dat to store the user's name and deposit information
 
-	initialDeposit.close();
+	initialDeposit << name << endl; // Store user's name then start a new line for organization and search purposes
+	initialDeposit << depositAmount << endl; // Store user's deposit amount
 
-	return true;
+	initialDeposit.close(); // Close the output file stream object
+
+	return true; // Return true to confirm to caller that deposit was successful
 }
 
 void Account::checkPassword(string password)
@@ -301,86 +315,79 @@ void Account::setUserLoanAmount(int number, Account *user) // Set the user loan 
 	userLoanFile.close();
 }
 
-void Account::getUserLoanAmount(Account *user)
+void Account::getUserLoanAmount(Account *user) // This function retrieves the user's loan amount
 {
 	string name = user->name;
 	string loanAmount;
 	bool empty = false;
 
-	//-------------------------------------------------------------------
-	vector <string> loanData;
-	ifstream checkLoan;
+	vector <string> loanData; // Create a string vector to hold the loan data
+	ifstream checkLoan; // Create an input file stream to load data from .dat file into the vector of strings
 
-	// Use object read file to load all loan data into vector
 	checkLoan.open("userLoanBalance.dat");
 
-	if (checkLoan.peek() == ifstream::traits_type::eof()) // If loan data file is empty make it false
+	if (checkLoan.peek() == ifstream::traits_type::eof()) // We check to see if loan data file is empty and set the bool to false
 	{
 		empty = true;
 	}
 
-	else if (!checkLoan.eof()) // Write data into vector until the end of the .dat file
+	else if (!checkLoan.eof()) // *File is not empty so we execute this statement* => Extract all data and load it into a string vector
 	{
 		string loan;
 
-		while (checkLoan >> loan)
+		while (checkLoan >> loan) // Extract and place each individual string loan data into a string vector  
 		{
 			loanData.push_back(loan);
 		}
+		checkLoan.close(); // Close the input file stream object
 	}
 
-	checkLoan.close();
-	//-----------------------------------------------------------------------
+	int i = 0; // Intialize i to zero to prepare it for the while loop
 
-	int i = 0;
-
-	while(i < loanData.size()) // Sift through vector and find user's name and retrieve their loan amount
+	while(i < loanData.size()) // Sift through string vector until we find the user's name
 	{
-		if (name == loanData[i])
+		if (name == loanData[i]) // Once we find the user's name we extract the data from the element after the user's name which is the loan amount
 		{
-			loanAmount = loanData[i + 1];
-			break;
+			loanAmount = loanData[i + 1]; // Set loanAmount (string) equal to the value found at the index + 1;
+			break; // Break out of function since we found the user and their loan information
 		}
-		i++;
+		i++; // If the name does not match the element found at index i we increment i and continue searching until we reach the end of the .dat file
 	}
 
-	double loanBalance = stod(loanAmount); // Convert the variable loanAmount(string) into a double 
+	double loanBalance = stod(loanAmount); // Convert the loanAmount (string) to a double via stod so we can preare it to be used with functions that accept only double
 
-	//-------------------------------------------------------------------------
-	if (loanBalance > 0 && empty != true) // If loanBalance is greater than zero and the file is not empty execute loan repayment function
+	if (loanBalance > 0 && empty != true) // If the user has a loan balance and the file is not empty then we execute this statement
 	{
-		double userBalance = user->getUserBalance();
+		double userBalance = user->getUserBalance(); // Set userBalance (double) to the user's total balance (double) which is derived from the parent class
 		int option = 0;
-		Validate validate;
+		Validate validate; // Create a Validate object to verify user's inputs
 	
-		cout << "You have a oustanding loan of $" << loanBalance << endl;
+		cout << "You have an oustanding loan of $" << loanBalance << endl; // Display the outstanding loan balance to the user and give them the option to pay off the loan or exit from the menu
 		cout << "1. Pay Loan" << endl;
 		cout << "2. Exit" << endl;
-		option = validate.inputValidate(1, 2);
+		option = validate.inputValidate(1, 2); // Validate user's input
 
-		if (option == 1) // User chooses to pay off loan
+		if (option == 1) // If user chooses option 1 then we execute loan repayment statement
 		{
-			if (userBalance >= loanBalance) // Check user balance and see if they have enough money to pay off loan
+			if (userBalance >= loanBalance) // First we check the user's balance and see if they have enough money in their account to pay off the loan
 			{
-				userBalance = userBalance - loanBalance; // Set the new user balance equal to the user's balance minus the loan balance
-				user->setUserBalance(userBalance); // Set the user's new balance
+				userBalance = userBalance - loanBalance; // Set the user balance equal to the user's balance minus the loan balance because of loan payment
+				user->setUserBalance(userBalance); // Set the user's new balance via a call to the parent class
 
 				for (unsigned int i = 0; i < loanData.size(); i++) // Loop through vector that hold's user loan amounts. If user's name is found we will erase the name and the element after the name (loan balance) from the vector.
 				{
-					if (name == loanData[i])
+					if (name == loanData[i]) // We find the user's name in the vector and erase their name and balance
 					{
 						loanData.erase(loanData.begin() + i); // Erase name
 						loanData.erase(loanData.begin() + i + 1); // Erase loan balance
 					}
 				}
 
-				//------------------------------------------------------------------------------
-				// Write all vector data into userLoan data
-				ofstream updateLoanData;
+				ofstream updateLoanData; // Create an output stream object to update the loan data
 
-				updateLoanData.open("userLoanBalance.dat");
+				updateLoanData.open("userLoanBalance.dat"); //******* <==== FIX ME *********** data file is not being updated correctly //
 
-				while (updateLoanData.is_open())
+				while (updateLoanData.is_open()) 
 				{
 					for (unsigned int i = 0; i < loanData.size() - 1; i++)
 					{
@@ -390,7 +397,6 @@ void Account::getUserLoanAmount(Account *user)
 
 					updateLoanData.close();
 				}
-				//--------------------------------------------------------------------------------
 			}
 			else
 			{
@@ -406,12 +412,62 @@ void Account::getUserLoanAmount(Account *user)
 	}
 }
 
+void Account::saveUserData(Account *user) // This function is excuted prior to program termination via user's selection to exit program
+{
+	
+	double balancenum; // This double variable will hold the user's current balance
+	string accountBalance; // This string variable will hold the converted value of balancenum (double ---> string)
+	balancenum = user->getUserBalance(); // Set balancenum equal to the user's current total balance
+	string userName = user->name; // This string variable will hold the user's name
+
+	vector <string> userData; // Create a vector of string to hold ALL user's data that will be read from the accountBalance.dat
+
+	ifstream saveUser; // Input file stream object to read the accountBalance.dat file
+	saveUser.open("accountBalance.dat");
+
+	std::stringstream ss; // Stringstream object to convert the balance (double) to a string
+	ss << balancenum << endl; // Input the double that hold's the user's total balance
+	accountBalance = ss.str(); // Convert the total balance to a string and set it equal to the string variable userName
+	string str; // Create a string variable to hold the extracted data elements from the .dat file
+
+	while (!saveUser.eof()) // Loop until we reach the end of the accountBalance.dat file
+	{
+		{
+			saveUser >> str; // Move extracted data from accountBalance.dat file to string variable
+			userData.push_back(str); // Add the string variable to the string vector
+		}
+	}
+	saveUser.close(); // Close input file stream
+
+	for (unsigned int i = 0; i < userData.size() - 1; i++) // Sift through the vector and find the user's name and update the balance which is found one element after the user's name
+	{
+		if (userName == userData[i]) // If we find the name then we update the account balance of the user
+		{
+			userData[i + 1] = accountBalance;
+			cout << endl;
+		}
+	}
+
+	ofstream newData; // Create an output filestream object to write the updated data into the .dat file
+
+	remove("accountBalance.dat"); // Remove the old accountBalance.dat file 
+	
+	newData.open("accountBalance.dat"); // Create the new accountBalance.dat file and update it with the new information
+
+	while (newData.is_open()) // Keep looping until the ouput file stream object is closed
+	{
+		for (unsigned int i = 0; i < userData.size() - 1; i++) // Transfer user name and user balance data from the vector into the new updated accountBalance.dat file
+		{
+			newData << userData[i] << endl;
+			
+		}
+
+		newData.close(); // Close the output file once we reach the vector's max size and exit the while loop
+	}
+}
+
 Account::~Account()
 {
 
 }
 
-string Account::getName()
-{
-	return name;
-}
