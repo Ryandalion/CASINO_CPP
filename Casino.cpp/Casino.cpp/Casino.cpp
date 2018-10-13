@@ -45,10 +45,11 @@ void Casino::getUserInfo(string name) // This function executes if user passes v
 	totalBalance = stod(balance); // Convert the balance from a string to a double using stod. Then we set totalBalance equal to the converted balance
 }
 
-void Casino::setUserBalance(double balance)
+void Casino::setUserBalance(double userBalance)
 {
-	totalBalance = totalBalance + balance;
+	totalBalance = totalBalance + userBalance;
 }
+
 
 void Casino::setUserWinnings(double winnings)
 {
@@ -146,11 +147,6 @@ int Casino::getUserMisfortune()
 	return misfortune;
 }
 
-double Casino::getUserBalance()
-{
-	return totalBalance;
-}
-
 double Casino::getUserWinnings()
 {
 	return userWinnings;
@@ -161,6 +157,10 @@ double Casino::getWinningsForSession()
 	return winningPerSession;
 }
 
+double Casino::getUserBalance()
+{
+	return totalBalance;
+}
 
 Casino::~Casino()
 {

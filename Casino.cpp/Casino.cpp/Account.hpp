@@ -34,7 +34,7 @@ public:
 	
 	void borrowMoney(Account *user);
 	void setUserLoanAmount(int number, Account *user);
-	void getUserLoanAmount(Account *user);
+	bool getUserLoanAmount(Account *user);
 
 	string getName();
 	void verifyUser(string name);

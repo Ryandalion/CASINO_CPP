@@ -47,17 +47,19 @@ public:
 	double getUserWinnings(); // Return user's winnings
 	double getWinningsForSession(); // Get user's winnings for the session
 
+
 	~Casino();
 
 private:
 	
+
 	double sessionWinnings;
 	double totalUserWinnings;
 	double totalUserLosses;
 	double userWinnings;
 	double winningPerSession;
 	double totalBalance;
-
+	
 	int luck;
 	int misfortune;
 };

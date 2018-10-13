@@ -220,64 +220,124 @@ void Account::borrowMoney(Account *user)
 {
 	int option = 0;
 	Validate validate;
-	cout << "$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$" << endl;
-	cout << "=========  CASINO LOAN  ========|" << endl;
-	cout << "|    BORROW      |    REPAY     |" << endl;
-	cout << "================================|" << endl;
-	cout << "|1.   $500       |    $600      |" << endl;
-	cout << "|2.   $1000      |    $1100     |" << endl;
-	cout << "|3.   $2500      |    $2550     |" << endl;
-	cout << "|4.   $5000      |    $5050     |" << endl;
-	cout << "$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$" << endl;
-	cout << endl;
-	cout << "Please enter the number that corresponds with the amount you wish to borrow" << endl;
-	if (numOfLoans < 1) // Validate that user does not have any active loans
+	bool empty = true;
+	bool loanStatus = false;
+	string loanQty;
+	double loanNum = 0;
+
+	ifstream loanData;
+	vector<string> loanInformation;
+	loanData.open("userLoanBalance.dat");
+	
+	if (loanData.peek() == ifstream::traits_type::eof()) // We check to see if loan data file is empty and set the bool to false
 	{
+		empty = false;
+	}
+
+	if (empty)
+	{
+		while (!loanData.eof()) // *File is not empty so we execute this statement* => Extract all data and load it into a string vector
+		{
+			string loan;
+
+			while (loanData >> loan) // Extract and place each individual string loan data into a string vector  
+			{
+				loanInformation.push_back(loan);
+			}
+			loanData.close(); // Close the input file stream object
+		}
+
+		int k = 0;
+		bool userExists = false;
+
+		for (unsigned int k = 0; k < loanInformation.size(); k++)
+		{
+			if (name == loanInformation[k])
+			{
+				userExists = true;
+				break;
+			}
+		}
+
+		if (userExists != false)
+		{
+			int i = 0;
+			while (i < loanInformation.size()) // Sift through string vector until we find the user's name
+			{
+				if (name == loanInformation[i])
+				{
+					loanQty = loanInformation[i + 2];
+					loanStatus = true;
+					break; // Break out of function since we found the user and their loan information
+				}
+				i++; // If the name does not match the element found at index i we increment i and continue searching until we reach the end of the .dat file
+			}
+		}
+	}
+	
+
+	if (loanNum < 1 && loanStatus == false) // Validate that user does not have any active loans
+	{
+
+		cout << "$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$" << endl;
+		cout << "=========  CASINO LOAN  ========|" << endl;
+		cout << "|    BORROW      |    REPAY     |" << endl;
+		cout << "================================|" << endl;
+		cout << "|1.   $500       |    $600      |" << endl;
+		cout << "|2.   $1000      |    $1100     |" << endl;
+		cout << "|3.   $2500      |    $2550     |" << endl;
+		cout << "|4.   $5000      |    $5050     |" << endl;
+		cout << "$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$" << endl;
+		cout << endl;
+		cout << "Please enter the number that corresponds with the amount you wish to borrow" << endl;
+
+		
 		option = validate.inputValidate(1, 4);
 
 		switch (option)
 		{
-		case 1:
-		{
-			cout << "You have chosen to borrow $500. The amount has been transferred to your account." << endl;
-			setUserLoanAmount(500, user);
-			setUserBalance(500);
-			numOfLoans++;
-			break;
+			case 1:
+			{
+				cout << "You have chosen to borrow $500. The amount has been transferred to your account." << endl;
+				setUserLoanAmount(500, user);
+				setUserBalance(500);
+				numOfLoans++;
+				break;
+			}
+
+			case 2:
+			{
+				cout << "You have chosen to borrow $1000. The amount has been transferred to your account." << endl;
+				setUserLoanAmount(1000, user);
+				setUserBalance(1000);
+				numOfLoans++;
+				break;
+			}
+
+			case 3:
+			{
+				cout << "You have chosen to borrow $2500. The amount has been transferred to your account." << endl;
+				setUserLoanAmount(2500, user);
+				setUserBalance(2500);
+				numOfLoans++;
+				break;
+			}
+
+			case 4:
+			{
+				cout << "You have chosen to borrow $5000. The amount has been transferred to your account." << endl;
+				setUserLoanAmount(5000, user);
+				setUserBalance(5000);
+				numOfLoans++;
+				break;
+			}
 		}
 
-		case 2:
-		{
-			cout << "You have chosen to borrow $1000. The amount has been transferred to your account." << endl;
-			setUserLoanAmount(1000, user);
-			setUserBalance(1000);
-			numOfLoans++;
-			break;
-		}
-
-		case 3:
-		{
-			cout << "You have chosen to borrow $2500. The amount has been transferred to your account." << endl;
-			setUserLoanAmount(2500, user);
-			setUserBalance(2500);
-			numOfLoans++;
-			break;
-		}
-
-		case 4:
-		{
-			cout << "You have chosen to borrow $5000. The amount has been transferred to your account." << endl;
-			setUserLoanAmount(5000, user);
-			setUserBalance(5000);
-			numOfLoans++;
-			break;
-		}
-		}
 	}
 
-	else
+	else if(loanNum >= 1)
 	{
-		cout << "You can only have one loan activet at a time" << endl;
+		cout << "You can only have one active loan at a time" << endl;
 	}
 
 }
@@ -307,19 +367,23 @@ void Account::setUserLoanAmount(int number, Account *user) // Set the user loan 
 
 	// Create a write object to record the user's name and the loan amount into a .dat file
 	ofstream userLoanFile;
+	string numOfLoans = "1";
 
 	userLoanFile.open("userLoanBalance.dat", fstream::app | std::ios_base::out);
 	userLoanFile << user->name << endl;
 	userLoanFile << loanAmount << endl;
+	userLoanFile << numOfLoans << endl;
+	userLoanFile << endl;
 
 	userLoanFile.close();
 }
 
-void Account::getUserLoanAmount(Account *user) // This function retrieves the user's loan amount
+bool Account::getUserLoanAmount(Account *user) // This function retrieves the user's loan amount
 {
 	string name = user->name;
 	string loanAmount;
 	bool empty = false;
+	bool loanStatus = false;
 
 	vector <string> loanData; // Create a string vector to hold the loan data
 	ifstream checkLoan; // Create an input file stream to load data from .dat file into the vector of strings
@@ -344,73 +408,103 @@ void Account::getUserLoanAmount(Account *user) // This function retrieves the us
 
 	int i = 0; // Intialize i to zero to prepare it for the while loop
 
-	while(i < loanData.size()) // Sift through string vector until we find the user's name
+	while (i < loanData.size()) // Sift through string vector until we find the user's name
 	{
 		if (name == loanData[i]) // Once we find the user's name we extract the data from the element after the user's name which is the loan amount
 		{
 			loanAmount = loanData[i + 1]; // Set loanAmount (string) equal to the value found at the index + 1;
+			loanStatus = true;
+			
 			break; // Break out of function since we found the user and their loan information
 		}
 		i++; // If the name does not match the element found at index i we increment i and continue searching until we reach the end of the .dat file
 	}
 
-	double loanBalance = stod(loanAmount); // Convert the loanAmount (string) to a double via stod so we can preare it to be used with functions that accept only double
-
-	if (loanBalance > 0 && empty != true) // If the user has a loan balance and the file is not empty then we execute this statement
+	if (loanStatus == true)
 	{
-		double userBalance = user->getUserBalance(); // Set userBalance (double) to the user's total balance (double) which is derived from the parent class
-		int option = 0;
-		Validate validate; // Create a Validate object to verify user's inputs
-	
-		cout << "You have an oustanding loan of $" << loanBalance << endl; // Display the outstanding loan balance to the user and give them the option to pay off the loan or exit from the menu
-		cout << "1. Pay Loan" << endl;
-		cout << "2. Exit" << endl;
-		option = validate.inputValidate(1, 2); // Validate user's input
+		double loanBalance = stod(loanAmount); // Convert the loanAmount (string) to a double via stod so we can preare it to be used with functions that accept only double
 
-		if (option == 1) // If user chooses option 1 then we execute loan repayment statement
+		if (loanBalance > 0 && empty != true) // If the user has a loan balance and the file is not empty then we execute this statement
 		{
-			if (userBalance >= loanBalance) // First we check the user's balance and see if they have enough money in their account to pay off the loan
-			{
-				userBalance = userBalance - loanBalance; // Set the user balance equal to the user's balance minus the loan balance because of loan payment
-				user->setUserBalance(userBalance); // Set the user's new balance via a call to the parent class
+			double userBalance = user->getUserBalance();
+			double loanAmount = 0;
+			int option = 0;
+			Validate validate; // Create a Validate object to verify user's inputs
 
-				for (unsigned int i = 0; i < loanData.size(); i++) // Loop through vector that hold's user loan amounts. If user's name is found we will erase the name and the element after the name (loan balance) from the vector.
+			cout << "You have an oustanding loan of $" << loanBalance << endl; // Display the outstanding loan balance to the user and give them the option to pay off the loan or exit from the menu
+			cout << "1. Pay Loan" << endl;
+			cout << "2. Exit" << endl;
+			option = validate.inputValidate(1, 2); // Validate user's input
+
+			if (option == 1) // If user chooses option 1 then we execute loan repayment statement
+			{
+				if (userBalance >= loanBalance) // First we check the user's balance and see if they have enough money in their account to pay off the loan
 				{
-					if (name == loanData[i]) // We find the user's name in the vector and erase their name and balance
+
+					loanAmount = (loanBalance * -1); // Set the user balance equal to the user's balance minus the loan balance because of loan payment
+					user->setUserBalance(loanAmount); // Set the user's new balance via a call to the parent class
+
+					for (unsigned int i = 0; i < loanData.size(); i++)
 					{
-						loanData.erase(loanData.begin() + i); // Erase name
-						loanData.erase(loanData.begin() + i + 1); // Erase loan balance
+						cout << loanData[i] << endl;
+					}
+					for (unsigned int i = 0; i < loanData.size() - 1; i++) // Loop through vector that hold's user loan amounts. If user's name is found we will erase the name and the element after the name (loan balance) from the vector.
+					{
+						
+						if (name == loanData[i]) // We find the user's name in the vector and erase their name and balance
+						{
+							int index = 0;
+							do
+							{
+								loanData.erase(loanData.begin() + i);
+								index++;
+							} while (index < 3);
+							break;
+						}
+					}
+
+					for (unsigned int i = 0; i < loanData.size(); i++)
+					{
+						cout << loanData[i] << endl;
+					}
+
+					ofstream updateLoanData; // Create an output stream object to update the loan data
+
+					remove("userLoanBalance.dat");
+					updateLoanData.open("userLoanBalance.dat");
+
+					while (updateLoanData.is_open())
+					{
+						for (unsigned int i = 0; i < loanData.size(); i++)
+						{
+							updateLoanData << loanData[i] << endl;
+
+						}
+
+						updateLoanData.close();
 					}
 				}
-
-				ofstream updateLoanData; // Create an output stream object to update the loan data
-
-				updateLoanData.open("userLoanBalance.dat"); //******* <==== FIX ME *********** data file is not being updated correctly //
-
-				while (updateLoanData.is_open()) 
+				else
 				{
-					for (unsigned int i = 0; i < loanData.size() - 1; i++)
-					{
-						updateLoanData << name << endl;
-						updateLoanData << loanData[i] << endl;
-					}
-
-					updateLoanData.close();
+					cout << "You do not have enough money to pay your loan." << endl;
 				}
 			}
-			else
-			{
-				cout << "You do not have enough money to pay your loan." << endl;
-			}
+
 		}
 
+		else
+		{
+			cout << "You have no outstanding loans" << endl;
+		}
+
+		return true;
 	}
 
 	else
-	{
-		cout << "You have no outstanding loans" << endl;
-	}
+		return false;
 }
+
+//------------------------------------------------------------------SAVE USER DATA FUNCTIONS---------------------------------------------------------------------------------
 
 void Account::saveUserData(Account *user) // This function is excuted prior to program termination via user's selection to exit program
 {

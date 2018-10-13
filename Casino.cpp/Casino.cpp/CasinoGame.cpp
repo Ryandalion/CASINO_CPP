@@ -65,7 +65,13 @@ void CasinoGame::startGame(Account *user)
 				}
 				else if (option == 2)
 				{
-					user->getUserLoanAmount(user);
+					if(user->getUserLoanAmount(user))
+					{
+					}
+					else
+					{
+						cout << "You do not have any active loans" << endl;
+					}
 				}
 				break;
 			}

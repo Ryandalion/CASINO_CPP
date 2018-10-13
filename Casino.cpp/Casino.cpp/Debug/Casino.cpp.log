@@ -1,16 +1,4 @@
 ﻿  Account.cpp
-c:\users\ryan\desktop\casino\casino.cpp\casino.cpp\account.cpp(342): warning C4018: '<': signed/unsigned mismatch
-  Bar.cpp
-  BlackjackRoom.cpp
-  Casino.cpp
-  CasinoGame.cpp
-  CasinoLobby.cpp
-  Location.cpp
-  Main.cpp
-c:\users\ryan\desktop\casino\casino.cpp\casino.cpp\main.cpp(18): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-  Poker.cpp
-  PokerRoom.cpp
-  Slots.cpp
-  SlotsRoom.cpp
-  Generating Code...
+c:\users\ryan\desktop\casino\casino.cpp\casino.cpp\account.cpp(266): warning C4018: '<': signed/unsigned mismatch
+c:\users\ryan\desktop\casino\casino.cpp\casino.cpp\account.cpp(418): warning C4018: '<': signed/unsigned mismatch
   Casino.cpp.vcxproj -> C:\Users\Ryan\Desktop\CASINO\Casino.cpp\Debug\Casino.cpp.exe
