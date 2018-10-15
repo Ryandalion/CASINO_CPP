@@ -85,11 +85,49 @@ void Slots::setCredits(Account* user)
 			break;
 		}
 	}
+
+	startMachine(user, credits);
 }
+
 
 double Slots::getCredits()
 {
 	return credits;
+}
+
+void Slots::startMachine(Account *user, int credits)
+{
+	SlotMachine machine;
+	bool play = true;
+
+	machine.userName = user->getName(); // Set user's name to the machine name
+	machine.creditAmount = credits;
+	// ADD LUCK AND MISFORTUNE FEATURE IN THIS LINE
+
+		cout << R"(
+	 .----------------.  .----------------.  .----------------.  .----------------.  .----------------. 
+	| .--------------. || .--------------. || .--------------. || .--------------. || .--------------. |
+	| |    _______   | || |   _____      | || |     ____     | || |  _________   | || |    _______   | |
+	| |   /  ___  |  | || |  |_   _|     | || |   .'    `.   | || | |  _   _  |  | || |   /  ___  |  | |
+	| |  |  (__ \_|  | || |    | |       | || |  /  .--.  \  | || | |_/ | | \_|  | || |  |  (__ \_|  | |
+	| |   '.___`-.   | || |    | |   _   | || |  | |    | |  | || |     | |      | || |   '.___`-.   | |
+	| |  |`\____) |  | || |   _| |__/ |  | || |  \  `--'  /  | || |    _| |_     | || |  |`\____) |  | |
+	| |  |_______.'  | || |  |________|  | || |   `.____.'   | || |   |_____|    | || |  |_______.'  | |
+	| |              | || |              | || |              | || |              | || |              | |
+	| '--------------' || '--------------' || '--------------' || '--------------' || '--------------' |
+	 '----------------'  '----------------'  '----------------'  '----------------'  '----------------' 
+	)" << endl;
+
+	
+	while (play) 
+	{
+
+
+
+		// Add feature where user's credits are converted into cash and given back when they exit from the machine
+		cout << "Press 1 to spin again or 2 to exit" << endl;
+	}
+
 }
 
 Slots::~Slots()

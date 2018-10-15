@@ -48,6 +48,7 @@ public:
 	double getWinningsForSession(); // Get user's winnings for the session
 
 
+
 	~Casino();
 
 private:

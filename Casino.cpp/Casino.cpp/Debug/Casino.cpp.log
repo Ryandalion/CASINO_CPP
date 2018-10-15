@@ -1,4 +1,3 @@
-﻿  Account.cpp
-c:\users\ryan\desktop\casino\casino.cpp\casino.cpp\account.cpp(266): warning C4018: '<': signed/unsigned mismatch
-c:\users\ryan\desktop\casino\casino.cpp\casino.cpp\account.cpp(418): warning C4018: '<': signed/unsigned mismatch
+﻿  Slots.cpp
+c:\users\ryan\desktop\casino\casino.cpp\casino.cpp\slots.cpp(89): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
   Casino.cpp.vcxproj -> C:\Users\Ryan\Desktop\CASINO\Casino.cpp\Debug\Casino.cpp.exe
