@@ -1,6 +1,10 @@
 #include "Casino.hpp"
 #include "Account.hpp"
 
+#include <algorithm>
+#include <random>
+#include <chrono>
+
 #ifndef SLOTS_H
 #define SLOTS_H
 

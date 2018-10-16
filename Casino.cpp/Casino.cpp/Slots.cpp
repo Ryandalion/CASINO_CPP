@@ -119,12 +119,61 @@ void Slots::startMachine(Account *user, int credits)
 	)" << endl;
 
 	
+	int userSpin = 0;
 	while (play) 
 	{
+		vector<string> slots = { "$","#","&","@","$","#","&","$","#","&","@","$","#","&","$","#","&","$","#","&","@","$","#","&","@","$","#","&","@", "#","#" };
+		unsigned seed = std::chrono::system_clock::now().time_since_epoch().count(); // Random seed to shuffle the array of symbols
+		int size = sizeof(slots); // Retrieve the size of the array
+		cout << "Press 1 to Spin!" << endl;
+		cin >> userSpin;
+		if (userSpin == 1)
+		{
+			string slotDisplay[3][3];
+			int numRandomize = rand() % 100 + 1; // Generate random number between 1 ~ 100. Use this variable to act as the number of times a shuffle of the array occurs
+			for (int i = 0; i < numRandomize; i++)
+			{
+				std::shuffle(begin(slots), end(slots), std::default_random_engine(seed));
+			}
+
+			for (int i = 0; i < 3; i++) // Rows
+			{
+				for (int k = 0; k < 3; k++) // Columns
+				{ 
+					int selection = rand() % slots.capacity(); // Randomize the element it picks from. Use the vector's size as a max for the random number generator
+					slotDisplay[i][k] = slots[selection]; // Retrieve the element and the randomized index inside slots vector and place into the 2d array
+					slots.erase(slots.begin() + selection); // Erase the element that was found at the index so it does not repeat
+					slots.shrink_to_fit(); // After removal of element, shrink the vector to resize it. This will also update the vector's capacity so it can retrieve a value within range
+				}
+			} // **Important Note: The vector will be reset and be restored to all original values after all symbols are placed on the screen ** 
+			
+		
+			// Now we have to calculate the winning lines
+
+
+			for (int i = 0; i < 3; i++)
+			{
+				for (int k = 0; k < 3; k++)
+				{
+					cout << slotDisplay[i][k] << " ";
+				}
+				cout << endl;
+			}
 
 
 
-		// Add feature where user's credits are converted into cash and given back when they exit from the machine
+
+		}
+
+
+
+
+
+
+
+
+
+		// Add feature where user's credits are converted into cash and given back when they exit from the m]achine
 		cout << "Press 1 to spin again or 2 to exit" << endl;
 	}
 
