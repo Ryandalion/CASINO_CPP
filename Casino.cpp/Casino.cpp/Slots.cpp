@@ -95,9 +95,12 @@ double Slots::getCredits()
 	return credits;
 }
 
+//--------------------------------------------------------------SLOT FUNCTIONS------------------------------------------------------------------------------
+
 void Slots::startMachine(Account *user, int credits)
 {
 	SlotMachine machine;
+	Validate validate;
 	bool play = true;
 
 	machine.userName = user->getName(); // Set user's name to the machine name
@@ -119,15 +122,67 @@ void Slots::startMachine(Account *user, int credits)
 	)" << endl;
 
 	
-	int userSpin = 0;
+
 	while (play) 
 	{
+		int userOption = 0; // Variable to hold if user wants to spin again
 		vector<string> slots = { "$","#","&","@","$","#","&","$","#","&","@","$","#","&","$","#","&","$","#","&","@","$","#","&","@","$","#","&","@", "#","#" };
 		unsigned seed = std::chrono::system_clock::now().time_since_epoch().count(); // Random seed to shuffle the array of symbols
 		int size = sizeof(slots); // Retrieve the size of the array
+
+		cout << "---BET AMOUNT---" << endl;
+		cout << "1) 1  CREDIT    " << endl;
+		cout << "2) 5  CREDITS   " << endl;
+		cout << "3) 10 CREDITS   " << endl;
+		cout << "4) 50 CREDITS   " << endl;
+		cout << "5) MAX CREDITS  " << endl; // MAX CREDITS IS 100 CREDITS
 		cout << "Press 1 to Spin!" << endl;
-		cin >> userSpin;
-		if (userSpin == 1)
+		cout << endl;
+		cout << R"(	
+                                                 +----------+
+                                                 |          |
+		+--------------------------------+----------+-------------------------------+
+		|                                                                           |
+		|  +---------------------------------------------------------------------+  |
+		|  |                                                                     |  |
+		|  |                                                                     |  |  +------+
+		|  |                                                                     |  |  |      |
+		|  |                                                                     |  |  |      |
+		|  |                                                                     |  |  ++----++
+		|  |                                                                     |  |   |    |
+		|  |                                                                     |  |   |    |
+		|  |                                                                     |  |   |    |
+		|  |                                                                     |  |   |    |
+		|  |                                                                     |  |   |    |
+		|  |                                                                     |  |   |    |
+		|  |                                                                     |  |   |    |
+		|  |                                                                     |  |   |    |
+		|  |                                                                     |  |   |    |
+		|  |                                                                     |  |   |    |
+		|  |                                                                     |  |   |    |
+		|  +---------------------------------------------------------------------+  +---++   |
+		|                                                                           |    |   |
+		|  +---------------------+ +---------------------+ +---------------------+  |    |   |
+		|  |                     | |                     | |                     |  |    |   |
+		|  |                     | |                     | |                     |  |    +---+
+		|  |                     | |                     | |                     |  |    |
+		|  +---------------------+ +---------------------+ +---------------------+  |    |
+		|                                                                           |    |
+		|                      +--------------------------------+                   +----+
+		|                      |                                |                   |
+		|                      |                                |                   |
+		|                      |                                |                   |
+		|                      +--------------------------------+                   |
+		|                                                                           |
+		|                                                                           |
+		+---------------------------------------------------------------------------+
+
+
+
+
+)";
+		cin >> userOption;
+		if (userOption == 1)
 		{
 			string slotDisplay[3][3];
 			int numRandomize = rand() % 100 + 1; // Generate random number between 1 ~ 100. Use this variable to act as the number of times a shuffle of the array occurs
@@ -165,16 +220,20 @@ void Slots::startMachine(Account *user, int credits)
 
 		}
 
+		cout << "Would you like to spin again?" << endl;
+		cout << "1. Spin again!" << endl;
+		cout << "2. Exit" << endl;
+		userOption = validate.inputValidate(1, 2);
+		if (userOption == 1)
+		{
+			play = true;
+		}
 
+		else if (userOption == 2)
+		{
+			play = false;
+		}
 
-
-
-
-
-
-
-		// Add feature where user's credits are converted into cash and given back when they exit from the m]achine
-		cout << "Press 1 to spin again or 2 to exit" << endl;
 	}
 
 }

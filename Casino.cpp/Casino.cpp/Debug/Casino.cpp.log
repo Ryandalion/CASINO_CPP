@@ -1,6 +1,6 @@
 ﻿  Slots.cpp
 c:\users\ryan\desktop\casino\casino.cpp\casino.cpp\slots.cpp(89): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
-c:\users\ryan\desktop\casino\casino.cpp\casino.cpp\slots.cpp(126): warning C4244: 'initializing': conversion from '_Rep' to 'unsigned int', possible loss of data
+c:\users\ryan\desktop\casino\casino.cpp\casino.cpp\slots.cpp(130): warning C4244: 'initializing': conversion from '_Rep' to 'unsigned int', possible loss of data
           with
           [
               _Rep=std::chrono::system_clock::rep
