@@ -18,25 +18,7 @@ struct SlotMachine
 	double numLines;
 	double betPerLine;
 
-	//SlotMachine();
-	//double pull(double creditAmount);
 };
-
-//SlotMachine::SlotMachine()
-//{
-//	string userName = "";
-//	double creditAmount = 0; 
-//	double winnings = 0;
-//	double losses = 0;
-//	double numLines = 0;
-//	double betsPerLine = 0;
-//}
-
-//double SlotMachine::pull(double creditAmount)
-//{
-//
-//}
-//
 
 class Slots
 {
@@ -47,6 +29,17 @@ public:
 	void setCredits(Account *user);
 	double getCredits();
 
+	double calculateWinner(string reel[][3], int lines);
+
+	double threeLines(string reel[][3], int lines); // 3 or less lines activated
+	double fiveLines(string reel[][3], int lines); // 3 ~ 5 lines activated
+	double sixLines(string reel[][3], int lines); // 6 ~ 7 lines activated
+	double eightLines(string reel[][3], int lines); // 8 ~ 9 lines activated
+	double tenLines(string reel[][3], int lines); // 10 ~ 11 lines activated
+	double twelveLines(string reel[][3], int lines); // 12 ~ 13 lines activated
+	double fourteenLines(string reel[][3], int lines); //14 ~ 16 lines activated
+	double sixteenLines(string reel[][3], int lines); // 16 ~ 17 lines activated
+	
 	void startMachine(Account *user, int credits);
 	~Slots();
 
