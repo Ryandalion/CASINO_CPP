@@ -41,6 +41,7 @@ public:
 	double sixteenLines(string *symbol,string **reel, int *lines); // 16 ~ 17 lines activated
 
 	void startMachine(Account *user, int credits);
+	void displayLines();
 	~Slots();
 
 private:

@@ -10,7 +10,7 @@ void Slots::startSlots(Account *user)
 {
 
 
-	cout << "Hello " << user->getName() << endl;
+	cout << "  Hello " << user->getName() << endl;
 	cout << endl;
 	setCredits(user); // Set the credits
 }
@@ -20,17 +20,17 @@ void Slots::setCredits(Account* user)
 	int inputAmount = 0;
 	Validate validate;
 
-	cout << "Select the number of credits you wish to play" << endl;
-	cout << " ______________________________________" << endl;
-	cout << "|               CREDITS                |" << endl;
-	cout << "|======================================|" << endl;
-	cout << "|       1. $1 = 100 Credits            |" << endl;
-	cout << "|       2. $10 = 1000 Credits          |" << endl;
-	cout << "|       3. $50 = 5000 Credits          |" << endl;
-	cout << "|       4. $100 = 10,000 Credits       |" << endl;
-	cout << "|       5. $500 = 50,000 Credits       |" << endl;
-	cout << "|       6. $1,000 = 100,000 Credits    |" << endl;
-	cout << "|______________________________________|" << endl;
+	cout << "  Select the number of credits you wish to put into the machine  " << endl;
+	cout << "  ______________________________________              " << endl;
+	cout << " |               CREDITS                |             " << endl;
+	cout << " |======================================|             " << endl;
+	cout << " |       1. $1 = 100 Credits            |             " << endl;
+	cout << " |       2. $10 = 1000 Credits          |             " << endl;
+	cout << " |       3. $50 = 5000 Credits          |             " << endl;
+	cout << " |       4. $100 = 10,000 Credits       |             " << endl;
+	cout << " |       5. $500 = 50,000 Credits       |             " << endl;
+	cout << " |       6. $1,000 = 100,000 Credits    |             " << endl;
+	cout << " |______________________________________|             " << endl;
 	cout << endl;
 	inputAmount = validate.inputValidate(1, 6);
 
@@ -107,6 +107,29 @@ void Slots::startMachine(Account *user, int credits)
 	machine.creditAmount = credits;
 	// ADD LUCK AND MISFORTUNE FEATURE IN THIS LINE
 
+	
+	
+
+	while (play) 
+	{
+		int slotOption = 0;
+		bool status = false;
+		int userOption = 0; // Variable to hold if user wants to spin again
+
+		int *activatedLines;
+		int lines = 0;
+		activatedLines = &lines;
+
+		int betAmount = 0;
+		vector<string> slots = { "$","#","&","@","$","#","&","$","#","&","@","$","#","&","$","#","&","$","#","&","@","$","#","&","@","$","#","&","@", "#","#" };
+		
+		
+		string *symbol;
+		string symbolSet[4] = { "$", "#","&", "@" };
+		symbol = symbolSet;
+		
+		unsigned seed = std::chrono::system_clock::now().time_since_epoch().count(); // Random seed to shuffle the array of symbols
+		int size = sizeof(slots); // Retrieve the size of the array
 		cout << R"(
 	 .----------------.  .----------------.  .----------------.  .----------------.  .----------------. 
 	| .--------------. || .--------------. || .--------------. || .--------------. || .--------------. |
@@ -121,86 +144,70 @@ void Slots::startMachine(Account *user, int credits)
 	 '----------------'  '----------------'  '----------------'  '----------------'  '----------------' 
 	)" << endl;
 
+		cout << "                ---BET AMOUNT---                --------MENU---------           ----LINES----       " << endl;
+		cout << "                  10 CREDIT                       1. Spin the Wheel!            1 - 17 LINES        " << endl;
+		cout << "                  50 CREDITS                      2. MAX BET                                        " << endl;
+		cout << "                 100 CREDITS                      3. View Lines Table                               " << endl;
+		cout << "                 500 CREDITS                      4. Set Bet Amount                                 " << endl;
+		cout << "                1000 CREDITS                      5. Set Number of Lines                            " << endl;
+		cout << "                                                  6. Exit                                           " << endl;
+		cout << endl;
+		cout << "Please enter an option: ";
+		slotOption = validate.inputValidate(1, 6);
+		
+		
+		bool betFlag = false;
+		bool lineFlag = false;
+		bool running = true;
+
+		while (running)
+		{
+		
+			if (slotOption == 1) // Spin the wheel
+			{
+				if (betFlag && lineFlag)
+				{
+					userOption == 1;
+					running = false;
+				}
+			
+				else if (betFlag && !lineFlag)
+				{
+					cout << "Please enter the number of lines you wish to play" << endl;
+				}
+
+				else if (lineFlag && !betFlag)
+				{
+					cout << "Please enter a bet amount you wish to play" << endl;
+				}
+
+				else if (!lineFlag && !betFlag)
+				{
+					cout << "Please enter a bet amount and the number of lines you wish to play" << endl;
+				}
+
+			}
+
+			else if (slotOption == 2) // Max bet activation
+			{
+				cout << "MAX BET ACTIVATED" << endl;
+				*activatedLines = 17;
+				// Bet condition
+				betFlag = true;
+				lineFlag = true;
+			}
+
+			else if (slotOption == 3) // Display lines table
+			{
+				displayLines();
+				slotOption = 0;
+				running = false;
+			}
+
+
+		}
 	
-
-	while (play) 
-	{
-		int *activatedLines;
-		int lines = 0;
-		activatedLines = &lines;
-
-		int betAmount = 0;
-		int userOption = 0; // Variable to hold if user wants to spin again
-		vector<string> slots = { "$","#","&","@","$","#","&","$","#","&","@","$","#","&","$","#","&","$","#","&","@","$","#","&","@","$","#","&","@", "#","#" };
-		
-		
-		string *symbol;
-		string symbolSet[4] = { "$", "#","&", "@" };
-		symbol = symbolSet;
-		
-		unsigned seed = std::chrono::system_clock::now().time_since_epoch().count(); // Random seed to shuffle the array of symbols
-		int size = sizeof(slots); // Retrieve the size of the array
-
-		cout << "---BET AMOUNT---" << endl;
-		cout << "1) 1  CREDIT    " << endl;
-		cout << "2) 5  CREDITS   " << endl;
-		cout << "3) 10 CREDITS   " << endl;
-		cout << "4) 50 CREDITS   " << endl;
-		cout << "5) MAX CREDITS  " << endl; // MAX CREDITS IS 100 CREDITS
-		cout << "ENTER BET AMOUNT: " << endl;
-		betAmount = validate.inputValidate(1, 5);
 		cout << endl;
-		cout << "---------LINES---------" << endl;
-		cout << "1 - 17 Lines Available" << endl;
-		cout << "Please enter the number " << endl;
-		cout << "of lines you would like " << endl;
-		cout << "to play: ";
-		*activatedLines = validate.inputValidate(1, 17);
-		cout << endl;
-		cout << R"(	
-                                                 +----------+
-                                                 |          |
-		+--------------------------------+----------+-------------------------------+
-		|                                                                           |
-		|  +---------------------------------------------------------------------+  |
-		|  |                                                                     |  |
-		|  |                     ^^^^^^PRESS 1 to SPIN^^^^^^                     |  |  +------+
-		|  |                                                                     |  |  |      |
-		|  |                              C++ SLOTS                              |  |  |      |
-		|  |                                                                     |  |  ++----++
-		|  |      ------SYMBOLS------               ------LINES------            |  |   |    |
-		|  |        $  = 1x Multiplier                Lines 1 ~ 17               |  |   |    |
-		|  |        #  = 2x Multiplier                                           |  |   |    |
-		|  |        &  = 3x Multiplier                                           |  |   |    |
-		|  |          Free Spins - @                                             |  |   |    |
-		|  |                                                                     |  |   |    |
-		|  |                           ---PAYOUT---                              |  |   |    |
-		|  |                     Lines * Symbol Multiplier                       |  |   |    |
-		|  |                                                                     |  |   |    |
-		|  |                                                                     |  |   |    |
-		|  |                                                                     |  |   |    |
-		|  +---------------------------------------------------------------------+  +---++   |
-		|                                                                           |    |   |
-		|  +---------------------+ +---------------------+ +---------------------+  |    |   |
-		|  |                     | |                     | |                     |  |    |   |
-		|  |      BET AMOUNT     | |        LINES        | |       CREDITS       |  |    +---+
-		|  |                     | |                     | |                     |  |    |
-		|  +---------------------+ +---------------------+ +---------------------+  |    |
-		|                                                                           |    |
-		|                      +--------------------------------+                   +----+
-		|                      |                                |                   |
-		|                      |            WINNINGS            |                   |
-		|                      |                                |                   |
-		|                      +--------------------------------+                   |
-		|                                                                           |
-		|                                                                           |
-		+---------------------------------------------------------------------------+
-
-
-
-
-)";
-		cin >> userOption;
 		if (userOption == 1)
 		{
 
@@ -311,6 +318,7 @@ void Slots::startMachine(Account *user, int credits)
 				winnings += sixteenLines(symbol, slotDisplay, activatedLines);
 			}
 			delete[] slotDisplay; // Delete 2d Array
+
 			cout << winnings << endl;
 
 
@@ -328,8 +336,10 @@ void Slots::startMachine(Account *user, int credits)
 		else if (userOption == 2)
 		{
 			play = false;
+			symbol = NULL; // Leave no dangling pointers
+			delete symbol; // Delete symbol pointer
 		}
-		delete[] symbol;
+		
 	}
 	
 
@@ -435,6 +445,9 @@ double Slots::fiveLines(string *symbol, string **reel, int *lines) // 3 ~ 5 line
 {
 	double winnings = 0;
 	
+	{
+		cout << "LINE 4 and 5 ACTIVATED" << endl;
+
 	for (int i = 0; i < 4; i++)
 	{
 		if (*lines == 4)
@@ -449,8 +462,7 @@ double Slots::fiveLines(string *symbol, string **reel, int *lines) // 3 ~ 5 line
 		}
 
 		else if (*lines > 4)
-		{
-			cout << "LINE 4 and 5 ACTIVATED" << endl;
+
 
 			if (reel[2][0] == symbol[i] && reel[1][1] == symbol[i] && reel[0][2] == symbol[i]) // Line 4
 			{
@@ -480,6 +492,7 @@ double Slots::sixLines(string *symbol, string **reel, int *lines) // 6 ~ 7 lines
 {
 	int winnings = 0;
 
+	cout << "LINES 6 and 7 ACTIVATED" << endl;
 	for (int i = 0; i < 4; i++)
 	{
 		if (*lines == 6) // SIX LINES ACTIVATED
@@ -495,7 +508,6 @@ double Slots::sixLines(string *symbol, string **reel, int *lines) // 6 ~ 7 lines
 
 		else if (*lines > 6) // LINE SIX AND LINE SEVEN ACTIVATED
 		{
-			cout << "LINES SIX AND SEVEN ACTIVATED" << endl; // WINNER LINE SIX
 			if (reel[1][0] == symbol[i] && reel[1][1] == symbol[i] && reel[0][2] == symbol[i])
 			{
 				cout << "WINNER LINE 6" << endl;
@@ -521,6 +533,7 @@ double Slots::sixLines(string *symbol, string **reel, int *lines) // 6 ~ 7 lines
 double Slots::eightLines(string *symbol, string **reel, int *lines) // 8 ~ 9 lines activated
 {
 	int winnings = 0;
+	cout << "LINES 8 and 9 ACTIVATED" << endl;
 	
 	for (int i = 0; i < 4; i++)
 	{
@@ -562,7 +575,7 @@ double Slots::eightLines(string *symbol, string **reel, int *lines) // 8 ~ 9 lin
 double Slots::tenLines(string *symbol, string **reel, int *lines) // 10 ~ 11 lines activated
 {
 	int winnings = 0;
-
+	cout << "LINES 10 and 12 ACTIVATED" << endl;
 	for (int i = 0; i < 4; i++)
 	{
 		if (*lines == 10) // TEN LINES ACTIVATED
@@ -601,6 +614,7 @@ double Slots::tenLines(string *symbol, string **reel, int *lines) // 10 ~ 11 lin
 double Slots::twelveLines(string *symbol, string **reel, int *lines) // 12 ~ 13 lines activated
 {
 	int winnings = 0;
+	cout << "LINES 12 and 13 ACTIVATED" << endl;
 
 	for (int i = 0; i < 4; i++)
 	{
@@ -616,7 +630,6 @@ double Slots::twelveLines(string *symbol, string **reel, int *lines) // 12 ~ 13 
 		
 		else if (*lines > 12) // LINE 12 and LINE 13 ACTIVATED
 		{
-			cout << "LINE 12 and 13 ACTIVATED" << endl;
 			if (reel[0][0] == symbol[i] && reel[0][1] == symbol[i] && reel[1][2] == symbol[i]) // LINE 12
 			{
 				cout << "WINNER LINE 12" << endl;
@@ -643,7 +656,7 @@ double Slots::twelveLines(string *symbol, string **reel, int *lines) // 12 ~ 13 
 double Slots::fourteenLines(string *symbol, string **reel, int *lines) //14 ~ 16 lines activated
 {
 	int winnings = 0;
-	
+	cout << "LINES 14 and 16 ACTIVATED" << endl;
 	for (int i = 0; i < 4; i++)
 	{
 		if (*lines == 14)
@@ -684,6 +697,7 @@ double Slots::fourteenLines(string *symbol, string **reel, int *lines) //14 ~ 16
 double Slots::sixteenLines(string *symbol, string **reel, int *lines) // 16 ~ 17 lines activated
 {
 	int winnings = 0;
+	cout << "LINES 16 and 17 ACTIVATED" << endl;
 
 	for (int i = 0; i < 4; i++)
 	{
@@ -718,6 +732,90 @@ double Slots::sixteenLines(string *symbol, string **reel, int *lines) // 16 ~ 17
 
 	}
 	return winnings;
+}
+
+void Slots::displayLines()
+{
+	cout << R"(
+                                           LINES TABLE
+                                                                      
+                  LINES 1 ~ 3                                        LINES 4 ~ 5
++--------------+---------------+--------------+    +--------------+---------------+--------------+
+|              |               |              |    |              |               |              |
+| LINE 2-------|---------------|-------LINE 2 |    | LINE 4-----  |               |  -----LINE 5 |
+|              |               |              |    |            \ |               | /            |
+|              |               |              |    |             \|               |/             |
++---------------------------------------------+    +---------------------------------------------+
+|              |               |              |    |              |\             /|              |
+| LINE 1-------|---------------|-------LINE 1 |    |              | \___________/ |              |
+|              |               |              |    |              | /           \ |              |
+|              |               |              |    |              |/             \|              |
++---------------------------------------------+    +---------------------------------------------+
+|              |               |              |    |            / |               |\             |
+| LINE 3-------|---------------|-------LINE 3 |    | LINE 5----/  |               | \-----LINE 4 |
+|              |               |              |    |              |               |              |
+|              |               |              |    |              |               |              |
++--------------+---------------+--------------+    +--------------+---------------+--------------+
+
+
+                  LINES 6 ~ 7                                       LINES 8 ~ 9
++--------------+---------------+--------------+    +--------------+---------------+--------------+
+|              |               |              |    |              |               |              |
+|              |               |  /----LINE 6 |    | LINE 8----\  |               |
+|              |               | /            |    |            \ |               |              |
+|              |               |/             |    |             \|               |              |
++---------------------------------------------+    +---------------------------------------------+
+|              |              /|              |    |              |\              |              |
+| LINE 6-------|-------------/ |              |    |              | \-------------|------ LINE 8 |
+| LINE 7-------|-------------\ |              |    |              | /-------------|------ LINE 9 |
+|              |              \|              |    |              |/              |              |
++---------------------------------------------+    +---------------------------------------------+
+|              |               |\             |    |             /|               |              |
+|              |               | \-----LINE 7 |    | LINE 9-----/ |               |              |
+|              |               |              |    |              |               |              |
+|              |               |              |    |              |               |              |
++--------------+---------------+--------------+    +--------------+---------------+--------------+
+
+
+                 LINES 10 ~ 11                                      LINES 12 ~ 13
++--------------+---------------+--------------+    +--------------+---------------+--------------+
+|              |               |              |    |              |               |              |
+|              |  /------------|------LINE 10 |    | LINE 12------|------------\  |              |
+|              | /             |              |    |              |             \ |              |
+|              |/              |              |    |              |              \|              |
++---------------------------------------------+    +---------------------------------------------+
+|             /|               |              |    |              |               |\             |
+| LINE 10----/ |               |              |    |              |               | \----LINE 12 |
+| LINE 11----\ |               |              |    |              |               | /----LINE 13 |
+|             \|               |              |    |              |               |/             |
++---------------------------------------------+    +---------------------------------------------+
+|              |\              |              |    |              |              /|              |
+|              | \             |              |    |              |             / |              |
+|              |  \------------|------LINE 11 |    | LINE 13------|------------/  |              |
+|              |               |              |    |              |               |              |
++--------------+---------------+--------------+    +--------------+---------------+--------------+
+
+
+                 LINES 14 ~ 15                                      LINES 16 ~ 17
++--------------+---------------+--------------+    +--------------+---------------+--------------+
+|              |               |              |    |              |               |              |
+| LINE 14---\  |               |  /---LINE 16 |    |              |  ___________  |              |
+|            \ |               | /            |    |              | /           \ |              |
+|             \|               |/             |    |              |/             \|              |
++---------------------------------------------+    +---------------------------------------------+
+|              |\_____________/|              |    |             /|               |\             |
+|              |               |              |    | LINE 16----/ |               | \----LINE 16 |
+|              | _____________ |              |    | LINE 17----\ |               | /----LINE 17 |
+|              |/             \|              |    |             \|               |/             |
++---------------------------------------------+    +---------------------------------------------+
+|             /|               |\             |    |              |\             /|              |
+|            / |               | \            |    |              | \___________/ |              |
+| LINE 15---/  |               |  \---LINE 15 |    |              |               |              |
+|              |               |              |    |              |               |              |
++--------------+---------------+--------------+    +--------------+---------------+--------------+
+
+)";
+
 }
 
 Slots::~Slots()
