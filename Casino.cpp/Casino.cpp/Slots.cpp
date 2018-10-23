@@ -225,9 +225,71 @@ void Slots::startMachine(Account *user, int credits)
 
 			if (activatedLines <= 3)
 			{
-				winnings = threeLines(slotDisplay, activatedLines);
+				winnings += threeLines(slotDisplay, activatedLines);
 			}
 
+			else if (activatedLines > 3 && activatedLines <= 5)
+			{
+				winnings += threeLines(slotDisplay, activatedLines);
+				winnings += fiveLines(slotDisplay, activatedLines);
+			}
+
+			else if (activatedLines > 5 && activatedLines <= 7)
+			{
+				winnings += threeLines(slotDisplay, activatedLines);
+				winnings += fiveLines(slotDisplay, activatedLines);
+				winnings += sixLines(slotDisplay, activatedLines);
+			}
+
+			else if (activatedLines > 7 && activatedLines <= 9)
+			{
+				winnings += threeLines(slotDisplay, activatedLines);
+				winnings += fiveLines(slotDisplay, activatedLines);
+				winnings += sixLines(slotDisplay, activatedLines);
+				winnings += eightLines(slotDisplay, activatedLines);
+			}
+
+			else if (activatedLines > 9 && activatedLines <= 11)
+			{
+				winnings += threeLines(slotDisplay, activatedLines);
+				winnings += fiveLines(slotDisplay, activatedLines);
+				winnings += sixLines(slotDisplay, activatedLines);
+				winnings += eightLines(slotDisplay, activatedLines);
+				winnings += tenLines(slotDisplay, activatedLines);
+			}
+
+			else if (activatedLines > 11 && activatedLines <= 13)
+			{
+				winnings += threeLines(slotDisplay, activatedLines);
+				winnings += fiveLines(slotDisplay, activatedLines);
+				winnings += sixLines(slotDisplay, activatedLines);
+				winnings += eightLines(slotDisplay, activatedLines);
+				winnings += tenLines(slotDisplay, activatedLines);
+				winnings += twelveLines(slotDisplay, activatedLines);
+			}
+
+			else if (activatedLines > 13 && activatedLines <= 15)
+			{
+				winnings += threeLines(slotDisplay, activatedLines);
+				winnings += fiveLines(slotDisplay, activatedLines);
+				winnings += sixLines(slotDisplay, activatedLines);
+				winnings += eightLines(slotDisplay, activatedLines);
+				winnings += tenLines(slotDisplay, activatedLines);
+				winnings += twelveLines(slotDisplay, activatedLines);
+				winnings += fourteenLines(slotDisplay, activatedLines);
+			}
+
+			else if (activatedLines > 15 && activatedLines <= 17)
+			{
+				winnings += threeLines(slotDisplay, activatedLines);
+				winnings += fiveLines(slotDisplay, activatedLines);
+				winnings += sixLines(slotDisplay, activatedLines);
+				winnings += eightLines(slotDisplay, activatedLines);
+				winnings += tenLines(slotDisplay, activatedLines);
+				winnings += twelveLines(slotDisplay, activatedLines);
+				winnings += fourteenLines(slotDisplay, activatedLines);
+				winnings += sixteenLines(slotDisplay, activatedLines);
+			}
 
 			cout << winnings << endl;
 
@@ -348,6 +410,12 @@ double Slots::threeLines(string reel[][3], int lines)
 }
 
 double Slots::fiveLines(string reel[][3], int lines) // 3 ~ 5 lines activated
+{
+	return 5;
+}
+
+
+double Slots::sixLines(string reel[][3], int lines) // 6 ~ 7 lines activated
 {
 	return 5;
 }
