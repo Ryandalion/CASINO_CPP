@@ -15,6 +15,7 @@ using std::streamsize;
 
 int main()
 {
+#
 	srand(time(NULL));
 	int choice = 0; // User intial choice
 	string username;

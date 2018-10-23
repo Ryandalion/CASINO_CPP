@@ -31,15 +31,15 @@ public:
 
 	double calculateWinner(string reel[][3], int lines);
 
-	double threeLines(string reel[][3], int lines); // 3 or less lines activated
-	double fiveLines(string reel[][3], int lines); // 3 ~ 5 lines activated
-	double sixLines(string reel[][3], int lines); // 6 ~ 7 lines activated
-	double eightLines(string reel[][3], int lines); // 8 ~ 9 lines activated
-	double tenLines(string reel[][3], int lines); // 10 ~ 11 lines activated
-	double twelveLines(string reel[][3], int lines); // 12 ~ 13 lines activated
-	double fourteenLines(string reel[][3], int lines); //14 ~ 16 lines activated
-	double sixteenLines(string reel[][3], int lines); // 16 ~ 17 lines activated
-	
+	double threeLines(string *symbol, string **reel, int *lines); // 3 or less lines activated
+	double fiveLines(string *symbol,string **reel, int *lines); // 3 ~ 5 lines activated
+	double sixLines(string *symbol,string **reel, int *lines); // 6 ~ 7 lines activated
+	double eightLines(string *symbol, string **reel, int *lines); // 8 ~ 9 lines activated
+	double tenLines(string *symbol, string **reel, int *lines); // 10 ~ 11 lines activated
+	double twelveLines(string *symbol, string **reel, int *lines); // 12 ~ 13 lines activated
+	double fourteenLines(string *symbol, string **reel, int *lines); //14 ~ 16 lines activated
+	double sixteenLines(string *symbol,string **reel, int *lines); // 16 ~ 17 lines activated
+
 	void startMachine(Account *user, int credits);
 	~Slots();
 

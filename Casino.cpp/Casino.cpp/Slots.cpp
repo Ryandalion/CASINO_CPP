@@ -125,10 +125,19 @@ void Slots::startMachine(Account *user, int credits)
 
 	while (play) 
 	{
-		int activatedLines = 0;
+		int *activatedLines;
+		int lines = 0;
+		activatedLines = &lines;
+
 		int betAmount = 0;
 		int userOption = 0; // Variable to hold if user wants to spin again
 		vector<string> slots = { "$","#","&","@","$","#","&","$","#","&","@","$","#","&","$","#","&","$","#","&","@","$","#","&","@","$","#","&","@", "#","#" };
+		
+		
+		string *symbol;
+		string symbolSet[4] = { "$", "#","&", "@" };
+		symbol = symbolSet;
+		
 		unsigned seed = std::chrono::system_clock::now().time_since_epoch().count(); // Random seed to shuffle the array of symbols
 		int size = sizeof(slots); // Retrieve the size of the array
 
@@ -146,7 +155,7 @@ void Slots::startMachine(Account *user, int credits)
 		cout << "Please enter the number " << endl;
 		cout << "of lines you would like " << endl;
 		cout << "to play: ";
-		activatedLines = validate.inputValidate(1, 17);
+		*activatedLines = validate.inputValidate(1, 17);
 		cout << endl;
 		cout << R"(	
                                                  +----------+
@@ -194,7 +203,15 @@ void Slots::startMachine(Account *user, int credits)
 		cin >> userOption;
 		if (userOption == 1)
 		{
-			string slotDisplay[3][3];
+
+
+			string **slotDisplay; // 2D array that we will pass as parameters for line checking
+			slotDisplay = new string*[3];
+			for (int i = 0; i != 3; i++)
+			{
+				slotDisplay[i] = new string[3];
+			}
+			
 			int numRandomize = rand() % 100 + 1; // Generate random number between 1 ~ 100. Use this variable to act as the number of times a shuffle of the array occurs
 			for (int i = 0; i < numRandomize; i++)
 			{
@@ -210,11 +227,13 @@ void Slots::startMachine(Account *user, int credits)
 					slots.erase(slots.begin() + selection); // Erase the element that was found at the index so it does not repeat
 					slots.shrink_to_fit(); // After removal of element, shrink the vector to resize it. This will also update the vector's capacity so it can retrieve a value within range
 				}
-			} // **Important Note: The vector will be reset and be restored to all original values after all symbols are placed on the screen ** 
+			} 
+			// **Important Note: The vector will be reset and be restored to all original values after all symbols are placed on the screen ** 
+
 
 			int winnings = 0;
 
-			for (int i = 0; i < 3; i++)
+			for (int i = 0; i < 3; i++) 
 			{
 				for (int k = 0; k < 3; k++)
 				{
@@ -223,75 +242,77 @@ void Slots::startMachine(Account *user, int credits)
 				cout << endl;
 			}
 
-			if (activatedLines <= 3)
+			if (*activatedLines <= 3)
 			{
-				winnings += threeLines(slotDisplay, activatedLines);
+				winnings += threeLines(symbol, slotDisplay, activatedLines);
+
 			}
 
-			else if (activatedLines > 3 && activatedLines <= 5)
+			else if (*activatedLines > 3 && *activatedLines <= 5)
 			{
-				winnings += threeLines(slotDisplay, activatedLines);
-				winnings += fiveLines(slotDisplay, activatedLines);
+				winnings += threeLines(symbol, slotDisplay, activatedLines);					// Line greater than or equal to 3
+				winnings += fiveLines(symbol, slotDisplay, activatedLines);                    
 			}
 
-			else if (activatedLines > 5 && activatedLines <= 7)
+			else if (*activatedLines > 5 && *activatedLines <= 7)
 			{
-				winnings += threeLines(slotDisplay, activatedLines);
-				winnings += fiveLines(slotDisplay, activatedLines);
-				winnings += sixLines(slotDisplay, activatedLines);
+				winnings += threeLines(symbol, slotDisplay, activatedLines);
+				winnings += fiveLines(symbol, slotDisplay, activatedLines);
+				winnings += sixLines(symbol, slotDisplay, activatedLines);
 			}
 
-			else if (activatedLines > 7 && activatedLines <= 9)
+			else if (*activatedLines > 7 && *activatedLines <= 9)
 			{
-				winnings += threeLines(slotDisplay, activatedLines);
-				winnings += fiveLines(slotDisplay, activatedLines);
-				winnings += sixLines(slotDisplay, activatedLines);
-				winnings += eightLines(slotDisplay, activatedLines);
+				winnings += threeLines(symbol, slotDisplay, activatedLines);
+				winnings += fiveLines(symbol, slotDisplay, activatedLines);
+				winnings += sixLines(symbol, slotDisplay, activatedLines);
+				winnings += eightLines(symbol, slotDisplay, activatedLines);
 			}
 
-			else if (activatedLines > 9 && activatedLines <= 11)
+			else if (*activatedLines > 9 && *activatedLines <= 11)
 			{
-				winnings += threeLines(slotDisplay, activatedLines);
-				winnings += fiveLines(slotDisplay, activatedLines);
-				winnings += sixLines(slotDisplay, activatedLines);
-				winnings += eightLines(slotDisplay, activatedLines);
-				winnings += tenLines(slotDisplay, activatedLines);
+				winnings += threeLines(symbol, slotDisplay, activatedLines);
+				winnings += fiveLines(symbol, slotDisplay, activatedLines);
+				winnings += sixLines(symbol, slotDisplay, activatedLines);
+				winnings += eightLines(symbol, slotDisplay, activatedLines);
+				winnings += tenLines(symbol, slotDisplay, activatedLines);
 			}
 
-			else if (activatedLines > 11 && activatedLines <= 13)
+			else if (*activatedLines > 11 && *activatedLines <= 13)
 			{
-				winnings += threeLines(slotDisplay, activatedLines);
-				winnings += fiveLines(slotDisplay, activatedLines);
-				winnings += sixLines(slotDisplay, activatedLines);
-				winnings += eightLines(slotDisplay, activatedLines);
-				winnings += tenLines(slotDisplay, activatedLines);
-				winnings += twelveLines(slotDisplay, activatedLines);
+				winnings += threeLines(symbol, slotDisplay, activatedLines);
+				winnings += fiveLines(symbol, slotDisplay, activatedLines);
+				winnings += sixLines(symbol, slotDisplay, activatedLines);
+				winnings += eightLines(symbol, slotDisplay, activatedLines);
+				winnings += tenLines(symbol, slotDisplay, activatedLines);
+				winnings += twelveLines(symbol, slotDisplay, activatedLines);
 			}
 
-			else if (activatedLines > 13 && activatedLines <= 15)
+			else if (*activatedLines > 13 && *activatedLines <= 15)
 			{
-				winnings += threeLines(slotDisplay, activatedLines);
-				winnings += fiveLines(slotDisplay, activatedLines);
-				winnings += sixLines(slotDisplay, activatedLines);
-				winnings += eightLines(slotDisplay, activatedLines);
-				winnings += tenLines(slotDisplay, activatedLines);
-				winnings += twelveLines(slotDisplay, activatedLines);
-				winnings += fourteenLines(slotDisplay, activatedLines);
+				winnings += threeLines(symbol, slotDisplay, activatedLines);
+				winnings += fiveLines(symbol, slotDisplay, activatedLines);
+				winnings += sixLines(symbol, slotDisplay, activatedLines);
+				winnings += eightLines(symbol, slotDisplay, activatedLines);
+				winnings += tenLines(symbol, slotDisplay, activatedLines);
+				winnings += twelveLines(symbol, slotDisplay, activatedLines);
+				winnings += fourteenLines(symbol, slotDisplay, activatedLines);
 			}
 
-			else if (activatedLines > 15 && activatedLines <= 17)
+			else if (*activatedLines > 15 && *activatedLines <= 17)
 			{
-				winnings += threeLines(slotDisplay, activatedLines);
-				winnings += fiveLines(slotDisplay, activatedLines);
-				winnings += sixLines(slotDisplay, activatedLines);
-				winnings += eightLines(slotDisplay, activatedLines);
-				winnings += tenLines(slotDisplay, activatedLines);
-				winnings += twelveLines(slotDisplay, activatedLines);
-				winnings += fourteenLines(slotDisplay, activatedLines);
-				winnings += sixteenLines(slotDisplay, activatedLines);
+				winnings += threeLines(symbol, slotDisplay, activatedLines);
+				winnings += fiveLines(symbol, slotDisplay, activatedLines);
+				winnings += sixLines(symbol, slotDisplay, activatedLines);
+				winnings += eightLines(symbol, slotDisplay, activatedLines);
+				winnings += tenLines(symbol, slotDisplay, activatedLines);
+				winnings += twelveLines(symbol, slotDisplay, activatedLines);
+				winnings += fourteenLines(symbol, slotDisplay, activatedLines);
+				winnings += sixteenLines(symbol, slotDisplay, activatedLines);
 			}
-
+			delete[] slotDisplay; // Delete 2d Array
 			cout << winnings << endl;
+
 
 		}
 
@@ -308,19 +329,20 @@ void Slots::startMachine(Account *user, int credits)
 		{
 			play = false;
 		}
-
+		delete[] symbol;
 	}
+	
 
 }
 
-double Slots::threeLines(string reel[][3], int lines)
+double Slots::threeLines(string *symbol, string **reel, int *lines)
 {
-	string symbol[4] = { "$", "#","&", "@" };
+	
 	int winnings = 0;
 	double test = 0;
 	int i, k, j = 0;
 
-	if (lines == 1) // ONLY ONE LINE ACTIVATED
+	if (*lines == 1) // ONLY ONE LINE ACTIVATED
 	{
 		cout << "LINE 1 ACTIVATED" << endl;
 		for (i = 0; i < 4; i++)
@@ -333,7 +355,7 @@ double Slots::threeLines(string reel[][3], int lines)
 
 	}
 
-	else if (lines == 2) // ONLY TWO LINES ACTIVATED
+	else if (*lines == 2) // ONLY TWO LINES ACTIVATED
 	{
 		cout << "LINE 2 ACTIVATED" << endl;
 		for (i = 0; i < 4; i++)
@@ -357,7 +379,7 @@ double Slots::threeLines(string reel[][3], int lines)
 		}
 	}
 
-	else if (lines == 3) // THREE LINES ACTIVATED
+	else if (*lines >= 3) // THREE LINES ACTIVATED
 	{
 		cout << "LINE 3 ACTIVATED" << endl;
 		for (i = 0; i < 4; i++)
@@ -409,40 +431,293 @@ double Slots::threeLines(string reel[][3], int lines)
 	return winnings;
 }
 
-double Slots::fiveLines(string reel[][3], int lines) // 3 ~ 5 lines activated
+double Slots::fiveLines(string *symbol, string **reel, int *lines) // 3 ~ 5 lines activated
 {
-	return 5;
+	double winnings = 0;
+	
+	for (int i = 0; i < 4; i++)
+	{
+		if (*lines == 4)
+		{
+			cout << "LINE 4 ACTIVATED" << endl;
+
+			if (reel[2][0] == symbol[i] && reel[1][1] == symbol[i] && reel[0][2] == symbol[i]) // Line 4
+			{
+				cout << "WINNER LINE 4" << endl;
+				winnings = 200;
+			}
+		}
+
+		else if (*lines > 4)
+		{
+			cout << "LINE 4 and 5 ACTIVATED" << endl;
+
+			if (reel[2][0] == symbol[i] && reel[1][1] == symbol[i] && reel[0][2] == symbol[i]) // Line 4
+			{
+				cout << "WINNER LINE 4" << endl;
+				winnings = 200;
+
+				if (reel[0][0] == symbol[i] && reel[1][1] == symbol[i] && reel[2][2] == symbol[i])
+				{
+					cout << "WINNER LINE 4 and 5" << endl;
+					winnings = 200;
+				}
+			}
+			
+			else if (reel[0][0] == symbol[i] && reel[1][1] == symbol[i] && reel[2][2] == symbol[i])
+			{
+				cout << "WINNER LINE 5" << endl;
+				winnings = 200;
+			}
+		}
+	}
+	
+	return winnings;
 }
 
 
-double Slots::sixLines(string reel[][3], int lines) // 6 ~ 7 lines activated
+double Slots::sixLines(string *symbol, string **reel, int *lines) // 6 ~ 7 lines activated
 {
-	return 5;
+	int winnings = 0;
+
+	for (int i = 0; i < 4; i++)
+	{
+		if (*lines == 6) // SIX LINES ACTIVATED
+		{
+			cout << "SIX LINES ACTIVATED" << endl;
+			if (reel[1][0] == symbol[i] && reel[1][1] == symbol[i] && reel[0][2] == symbol[i])
+			{
+				cout << "WINNER LINE 6" << endl;
+				winnings = 200;
+			}
+
+		}
+
+		else if (*lines > 6) // LINE SIX AND LINE SEVEN ACTIVATED
+		{
+			cout << "LINES SIX AND SEVEN ACTIVATED" << endl; // WINNER LINE SIX
+			if (reel[1][0] == symbol[i] && reel[1][1] == symbol[i] && reel[0][2] == symbol[i])
+			{
+				cout << "WINNER LINE 6" << endl;
+				winnings = 200;
+				if (reel[1][0] == symbol[i] && reel[1][1] == symbol[i] && reel[2][2] == symbol[i])
+				{
+					cout << "WINNER LINE 7" << endl;
+					winnings = 200;
+				}
+			}
+
+			else if (reel[1][0] == symbol[i] && reel[1][1] == symbol[i] && reel[2][2] == symbol[i])
+			{
+				cout << "WINNER LINE 7" << endl;
+				winnings = 200;
+			}
+		}
+	}
+
+	return winnings;
 }
 
-double Slots::eightLines(string reel[][3], int lines) // 8 ~ 9 lines activated
+double Slots::eightLines(string *symbol, string **reel, int *lines) // 8 ~ 9 lines activated
 {
-	return 5;
+	int winnings = 0;
+	
+	for (int i = 0; i < 4; i++)
+	{
+		if (*lines == 8) // LINE 8 ACTIVATED
+		{
+			cout << "LINE 8 ACTIVATED" << endl;
+			if (reel[0][0] == symbol[i] && reel[1][1] == symbol[i] && reel[1][2] == symbol[i])
+			{
+				cout << "WINNER LINE 8" << endl;
+				winnings = 200;
+			}
+		}
+
+		else if (*lines > 8)
+		{
+			if (reel[0][0] == symbol[i] && reel[1][1] == symbol[i] && reel[1][2] == symbol[i])
+			{
+				cout << "WINNER LINE 8" << endl;
+				winnings = 200;
+				if (reel[2][0] == symbol[i] && reel[2][1] == symbol[i] && reel[2][2] == symbol[i])
+				{
+					cout << "WINNER LINE 8 and LINE 9" << endl;
+					winnings = 200;
+				}
+			}
+
+			else if (reel[2][0] == symbol[i] && reel[1][1] == symbol[i] && reel[1][2] == symbol[i])
+			{
+				cout << "WINNER LINE 9" << endl;
+				winnings = 200;
+			}
+		}
+
+	}
+
+	return winnings;
 }
 
-double Slots::tenLines(string reel[][3], int lines) // 10 ~ 11 lines activated
+double Slots::tenLines(string *symbol, string **reel, int *lines) // 10 ~ 11 lines activated
 {
-	return 5;
+	int winnings = 0;
+
+	for (int i = 0; i < 4; i++)
+	{
+		if (*lines == 10) // TEN LINES ACTIVATED
+		{
+			if (reel[1][0] == symbol[i] && reel[0][1] == symbol[i] && reel[0][2] == symbol[i])
+			{
+				cout << "WINNER LINE 10" << endl;
+				winnings = 200;
+			}
+		}
+
+		else if (*lines > 10) // 11 LINES ACTIVATED
+		{
+			if (reel[1][0] == symbol[i] && reel[0][1] == symbol[i] && reel[0][2] == symbol[i])
+			{
+				cout << "WINNER LINE 10" << endl;
+				winnings = 200;
+				if (reel[1][0] == symbol[i] && reel[2][1] == symbol[i] && reel[2][2] == symbol[i])
+				{
+					cout << "WINNER LINE 10 AND LINE 11" << endl;
+					winnings = 200;
+				}
+
+				else if (reel[1][0] == symbol[i] && reel[2][1] == symbol[i] && reel[2][2] == symbol[i])
+				{
+					cout << "WINNER LINE 11" << endl;
+					winnings = 200;
+				}
+			}
+		}
+	}
+
+	return winnings;
 }
 
-double Slots::twelveLines(string reel[][3], int lines) // 12 ~ 13 lines activated
+double Slots::twelveLines(string *symbol, string **reel, int *lines) // 12 ~ 13 lines activated
 {
-	return 5;
+	int winnings = 0;
+
+	for (int i = 0; i < 4; i++)
+	{
+		if (*lines == 12) // LINE 12 ACTIVATED
+		{
+			cout << "LINE 12 ACTIVATED" << endl;
+			if (reel[0][0] == symbol[i] && reel[0][1] == symbol[i] && reel[1][2] == symbol[i])
+			{
+				cout << "WINNER LINE 12" << endl;
+				winnings = 200;
+			}
+		}
+		
+		else if (*lines > 12) // LINE 12 and LINE 13 ACTIVATED
+		{
+			cout << "LINE 12 and 13 ACTIVATED" << endl;
+			if (reel[0][0] == symbol[i] && reel[0][1] == symbol[i] && reel[1][2] == symbol[i]) // LINE 12
+			{
+				cout << "WINNER LINE 12" << endl;
+				winnings = 200;
+				if (reel[2][0] == symbol[i] && reel[2][1] == symbol[i] && reel[1][2] == symbol[i]) // LINE 12 and 13
+				{
+					cout << "WINNER LINE 12 and 13" << endl;
+					winnings = 200;
+				}
+			}
+
+			else if (reel[2][0] == symbol[i] && reel[2][1] == symbol[i] && reel[1][2] == symbol[i]) // LINE 13
+			{
+				cout << "WINNER LINE 13" << endl;
+				winnings = 200;
+			}
+			
+		}
+	}
+
+	return winnings;
 }
 
-double Slots::fourteenLines(string reel[][3], int lines) //14 ~ 16 lines activated
+double Slots::fourteenLines(string *symbol, string **reel, int *lines) //14 ~ 16 lines activated
 {
-	return 5;
+	int winnings = 0;
+	
+	for (int i = 0; i < 4; i++)
+	{
+		if (*lines == 14)
+		{
+			if (reel[0][0] == symbol[i] && reel[1][1] == symbol[i] && reel[0][2] == symbol[i])
+			{
+				cout << "WINNER LINE 14" << endl;
+				winnings = 200;
+			}
+		}
+
+		else if (*lines > 14)
+		{
+			if (reel[0][0] == symbol[i] && reel[1][1] == symbol[i] && reel[0][2] == symbol[i]) // LINE 14
+			{
+				cout << "WINNER LINE 14" << endl;
+				winnings = 200;
+				if (reel[2][0] == symbol[i] && reel[1][1] == symbol[i] && reel[2][2] == symbol[i]) // LINE 14 and 15
+				{
+					cout << "WINNER LINE 14 and LINE 15" << endl;
+					winnings = 200;
+				}
+			}
+
+			else if (reel[2][0] == symbol[i] && reel[1][1] == symbol[i] && reel[2][2] == symbol[i]) // LINE 15
+			{
+				cout << "WINNER LINE 15" << endl;
+				winnings = 200;
+			}
+		}
+
+
+	}
+
+	return winnings;
 }
 
-double Slots::sixteenLines(string reel[][3], int lines) // 16 ~ 17 lines activated
+double Slots::sixteenLines(string *symbol, string **reel, int *lines) // 16 ~ 17 lines activated
 {
-	return 5;
+	int winnings = 0;
+
+	for (int i = 0; i < 4; i++)
+	{
+		if (*lines == 16)
+		{
+			if (reel[1][0] == symbol[i] && reel[0][1] == symbol[i] && reel[1][2] == symbol[i])
+			{
+				cout << "WINNER LINE 16" << endl;
+				winnings = 200;
+			}
+		}
+
+		else if (*lines > 16)
+		{
+			if (reel[1][0] == symbol[i] && reel[0][1] == symbol[i] && reel[1][2] == symbol[i]) // LINE 16 ACTIVATED
+			{
+				cout << "WINNER LINE 16" << endl;
+				winnings = 200;
+				if (reel[1][0] == symbol[i] && reel[2][1] == symbol[i] && reel[1][2] == symbol[i]) // LINE 16 and LINE 17 ACTIVATED
+				{
+					cout << "WINNER LINE 16 and LINE 17" << endl;
+					winnings = 200;
+				}
+			}
+
+			else if (reel[1][0] == symbol[i] && reel[1][1] == symbol[i] && reel[1][2] == symbol[i]) // LINE 17 ACTIVATED
+			{
+				cout << "WINNER LINE 17" << endl;
+				winnings = 200;
+			}
+		}
+
+	}
+	return winnings;
 }
 
 Slots::~Slots()
