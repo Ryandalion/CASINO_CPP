@@ -4,6 +4,9 @@
 #include <algorithm>
 #include <random>
 #include <chrono>
+#include <map>
+
+using std::map;
 
 #ifndef SLOTS_H
 #define SLOTS_H

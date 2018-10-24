@@ -1,46 +1,10 @@
 ﻿  Slots.cpp
 c:\users\ryan\desktop\casino\casino.cpp\casino.cpp\slots.cpp(89): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
-c:\users\ryan\desktop\casino\casino.cpp\casino.cpp\slots.cpp(131): warning C4244: 'initializing': conversion from '_Rep' to 'unsigned int', possible loss of data
+c:\users\ryan\desktop\casino\casino.cpp\casino.cpp\slots.cpp(347): warning C4244: 'initializing': conversion from '_Rep' to 'unsigned int', possible loss of data
           with
           [
               _Rep=std::chrono::system_clock::rep
           ]
-c:\users\ryan\desktop\casino\casino.cpp\casino.cpp\slots.cpp(170): warning C4553: '==': result of expression not used; did you intend '='?
-c:\users\ryan\desktop\casino\casino.cpp\casino.cpp\slots.cpp(254): warning C4244: '+=': conversion from 'double' to 'int', possible loss of data
-c:\users\ryan\desktop\casino\casino.cpp\casino.cpp\slots.cpp(260): warning C4244: '+=': conversion from 'double' to 'int', possible loss of data
-c:\users\ryan\desktop\casino\casino.cpp\casino.cpp\slots.cpp(261): warning C4244: '+=': conversion from 'double' to 'int', possible loss of data
-c:\users\ryan\desktop\casino\casino.cpp\casino.cpp\slots.cpp(266): warning C4244: '+=': conversion from 'double' to 'int', possible loss of data
-c:\users\ryan\desktop\casino\casino.cpp\casino.cpp\slots.cpp(267): warning C4244: '+=': conversion from 'double' to 'int', possible loss of data
-c:\users\ryan\desktop\casino\casino.cpp\casino.cpp\slots.cpp(268): warning C4244: '+=': conversion from 'double' to 'int', possible loss of data
-c:\users\ryan\desktop\casino\casino.cpp\casino.cpp\slots.cpp(273): warning C4244: '+=': conversion from 'double' to 'int', possible loss of data
-c:\users\ryan\desktop\casino\casino.cpp\casino.cpp\slots.cpp(274): warning C4244: '+=': conversion from 'double' to 'int', possible loss of data
-c:\users\ryan\desktop\casino\casino.cpp\casino.cpp\slots.cpp(275): warning C4244: '+=': conversion from 'double' to 'int', possible loss of data
-c:\users\ryan\desktop\casino\casino.cpp\casino.cpp\slots.cpp(276): warning C4244: '+=': conversion from 'double' to 'int', possible loss of data
-c:\users\ryan\desktop\casino\casino.cpp\casino.cpp\slots.cpp(281): warning C4244: '+=': conversion from 'double' to 'int', possible loss of data
-c:\users\ryan\desktop\casino\casino.cpp\casino.cpp\slots.cpp(282): warning C4244: '+=': conversion from 'double' to 'int', possible loss of data
-c:\users\ryan\desktop\casino\casino.cpp\casino.cpp\slots.cpp(283): warning C4244: '+=': conversion from 'double' to 'int', possible loss of data
-c:\users\ryan\desktop\casino\casino.cpp\casino.cpp\slots.cpp(284): warning C4244: '+=': conversion from 'double' to 'int', possible loss of data
-c:\users\ryan\desktop\casino\casino.cpp\casino.cpp\slots.cpp(285): warning C4244: '+=': conversion from 'double' to 'int', possible loss of data
-c:\users\ryan\desktop\casino\casino.cpp\casino.cpp\slots.cpp(290): warning C4244: '+=': conversion from 'double' to 'int', possible loss of data
-c:\users\ryan\desktop\casino\casino.cpp\casino.cpp\slots.cpp(291): warning C4244: '+=': conversion from 'double' to 'int', possible loss of data
-c:\users\ryan\desktop\casino\casino.cpp\casino.cpp\slots.cpp(292): warning C4244: '+=': conversion from 'double' to 'int', possible loss of data
-c:\users\ryan\desktop\casino\casino.cpp\casino.cpp\slots.cpp(293): warning C4244: '+=': conversion from 'double' to 'int', possible loss of data
-c:\users\ryan\desktop\casino\casino.cpp\casino.cpp\slots.cpp(294): warning C4244: '+=': conversion from 'double' to 'int', possible loss of data
-c:\users\ryan\desktop\casino\casino.cpp\casino.cpp\slots.cpp(295): warning C4244: '+=': conversion from 'double' to 'int', possible loss of data
-c:\users\ryan\desktop\casino\casino.cpp\casino.cpp\slots.cpp(300): warning C4244: '+=': conversion from 'double' to 'int', possible loss of data
-c:\users\ryan\desktop\casino\casino.cpp\casino.cpp\slots.cpp(301): warning C4244: '+=': conversion from 'double' to 'int', possible loss of data
-c:\users\ryan\desktop\casino\casino.cpp\casino.cpp\slots.cpp(302): warning C4244: '+=': conversion from 'double' to 'int', possible loss of data
-c:\users\ryan\desktop\casino\casino.cpp\casino.cpp\slots.cpp(303): warning C4244: '+=': conversion from 'double' to 'int', possible loss of data
-c:\users\ryan\desktop\casino\casino.cpp\casino.cpp\slots.cpp(304): warning C4244: '+=': conversion from 'double' to 'int', possible loss of data
-c:\users\ryan\desktop\casino\casino.cpp\casino.cpp\slots.cpp(305): warning C4244: '+=': conversion from 'double' to 'int', possible loss of data
-c:\users\ryan\desktop\casino\casino.cpp\casino.cpp\slots.cpp(306): warning C4244: '+=': conversion from 'double' to 'int', possible loss of data
-c:\users\ryan\desktop\casino\casino.cpp\casino.cpp\slots.cpp(311): warning C4244: '+=': conversion from 'double' to 'int', possible loss of data
-c:\users\ryan\desktop\casino\casino.cpp\casino.cpp\slots.cpp(312): warning C4244: '+=': conversion from 'double' to 'int', possible loss of data
-c:\users\ryan\desktop\casino\casino.cpp\casino.cpp\slots.cpp(313): warning C4244: '+=': conversion from 'double' to 'int', possible loss of data
-c:\users\ryan\desktop\casino\casino.cpp\casino.cpp\slots.cpp(314): warning C4244: '+=': conversion from 'double' to 'int', possible loss of data
-c:\users\ryan\desktop\casino\casino.cpp\casino.cpp\slots.cpp(315): warning C4244: '+=': conversion from 'double' to 'int', possible loss of data
-c:\users\ryan\desktop\casino\casino.cpp\casino.cpp\slots.cpp(316): warning C4244: '+=': conversion from 'double' to 'int', possible loss of data
-c:\users\ryan\desktop\casino\casino.cpp\casino.cpp\slots.cpp(317): warning C4244: '+=': conversion from 'double' to 'int', possible loss of data
-c:\users\ryan\desktop\casino\casino.cpp\casino.cpp\slots.cpp(318): warning C4244: '+=': conversion from 'double' to 'int', possible loss of data
-c:\users\ryan\desktop\casino\casino.cpp\casino.cpp\slots.cpp(353): warning C4101: 'k': unreferenced local variable
+c:\users\ryan\desktop\casino\casino.cpp\casino.cpp\slots.cpp(513): warning C4101: 'k': unreferenced local variable
+c:\users\ryan\desktop\casino\casino.cpp\casino.cpp\slots.cpp(645): warning C4715: 'Slots::fiveLines': not all control paths return a value
   Casino.cpp.vcxproj -> C:\Users\Ryan\Desktop\CASINO\Casino.cpp\Debug\Casino.cpp.exe
