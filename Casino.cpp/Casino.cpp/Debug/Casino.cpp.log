@@ -1,10 +1,9 @@
 ﻿  Slots.cpp
-c:\users\ryan\desktop\casino\casino.cpp\casino.cpp\slots.cpp(89): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
-c:\users\ryan\desktop\casino\casino.cpp\casino.cpp\slots.cpp(347): warning C4244: 'initializing': conversion from '_Rep' to 'unsigned int', possible loss of data
+c:\users\ryan\desktop\casino\casino.cpp\casino.cpp\slots.cpp(408): warning C4244: 'initializing': conversion from '_Rep' to 'unsigned int', possible loss of data
           with
           [
               _Rep=std::chrono::system_clock::rep
           ]
-c:\users\ryan\desktop\casino\casino.cpp\casino.cpp\slots.cpp(513): warning C4101: 'k': unreferenced local variable
-c:\users\ryan\desktop\casino\casino.cpp\casino.cpp\slots.cpp(645): warning C4715: 'Slots::fiveLines': not all control paths return a value
+c:\users\ryan\desktop\casino\casino.cpp\casino.cpp\slots.cpp(602): warning C4101: 'k': unreferenced local variable
+c:\users\ryan\desktop\casino\casino.cpp\casino.cpp\slots.cpp(728): warning C4715: 'Slots::fiveLines': not all control paths return a value
   Casino.cpp.vcxproj -> C:\Users\Ryan\Desktop\CASINO\Casino.cpp\Debug\Casino.cpp.exe

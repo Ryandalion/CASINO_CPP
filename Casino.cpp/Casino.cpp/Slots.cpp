@@ -8,86 +8,85 @@ Slots::Slots()
 
 void Slots::startSlots(Account *user)
 {
-
-
 	cout << "  Hello " << user->getName() << endl;
 	cout << endl;
-	setCredits(user); // Set the credits
+	startMachine(user);
 }
 
-void Slots::setCredits(Account* user)
-{
-	int inputAmount = 0;
-	Validate validate;
-
-	cout << "  Select the number of credits you wish to put into the machine  " << endl;
-	cout << "  ______________________________________              " << endl;
-	cout << " |               CREDITS                |             " << endl;
-	cout << " |======================================|             " << endl;
-	cout << " |       1. $1 = 100 Credits            |             " << endl;
-	cout << " |       2. $10 = 1000 Credits          |             " << endl;
-	cout << " |       3. $50 = 5000 Credits          |             " << endl;
-	cout << " |       4. $100 = 10,000 Credits       |             " << endl;
-	cout << " |       5. $500 = 50,000 Credits       |             " << endl;
-	cout << " |       6. $1,000 = 100,000 Credits    |             " << endl;
-	cout << " |______________________________________|             " << endl;
-	cout << endl;
-	inputAmount = validate.inputValidate(1, 6);
-
-	double deduct = 0;
-	switch (inputAmount)
-	{
-		case 1:
-		{
-			deduct = -1;
-			user->setUserBalance(deduct);
-			credits = 100;
-			break;
-		}
-
-		case 2:
-		{
-			deduct = -10;
-			user->setUserBalance(deduct);
-			credits = 1000;
-			break;
-		}
-
-		case 3:
-		{
-			deduct = -50;
-			user->setUserBalance(deduct);
-			credits = 5000;
-			break;
-		}
-
-		case 4:
-		{
-			deduct = -100;
-			user->setUserBalance(deduct);
-			credits = 10000;
-			break;
-		}
-
-		case 5:
-		{
-			deduct = -500;
-			user->setUserBalance(deduct);
-			credits = 50000;
-			break;
-		}
-
-		case 6:
-		{
-			deduct = -1000;
-			user->setUserBalance(deduct);
-			credits = 100000;
-			break;
-		}
-	}
-
-	startMachine(user, credits);
-}
+//void Slots::setCredits(Account* user)
+//{
+//	int inputAmount = 0;
+//	Validate validate;
+//
+//	cout << "Select the number of credits you wish to put into the machine  " << endl;
+//	cout << " ______________________________________              " << endl;
+//	cout << "|               CREDITS                |             " << endl;
+//	cout << "|======================================|             " << endl;
+//	cout << "|       1. $1 = 100 Credits            |             " << endl;
+//	cout << "|       2. $10 = 1000 Credits          |             " << endl;
+//	cout << "|       3. $50 = 5000 Credits          |             " << endl;
+//	cout << "|       4. $100 = 10,000 Credits       |             " << endl;
+//	cout << "|       5. $500 = 50,000 Credits       |             " << endl;
+//	cout << "|       6. $1,000 = 100,000 Credits    |             " << endl;
+//	cout << "|______________________________________|             " << endl;
+//	cout << endl;
+//	inputAmount = validate.inputValidate(1, 6);
+//
+//	double deduct = 0;
+//
+//	switch (inputAmount)
+//	{
+//		case 1:
+//		{
+//			deduct = -1;
+//			user->setUserBalance(deduct);
+//			credits = 100;
+//			break;
+//		}
+//
+//		case 2:
+//		{
+//			deduct = -10;
+//			user->setUserBalance(deduct);
+//			credits = 1000;
+//			break;
+//		}
+//
+//		case 3:
+//		{
+//			deduct = -50;
+//			user->setUserBalance(deduct);
+//			credits = 5000;
+//			break;
+//		}
+//
+//		case 4:
+//		{
+//			deduct = -100;
+//			user->setUserBalance(deduct);
+//			credits = 10000;
+//			break;
+//		}
+//
+//		case 5:
+//		{
+//			deduct = -500;
+//			user->setUserBalance(deduct);
+//			credits = 50000;
+//			break;
+//		}
+//
+//		case 6:
+//		{
+//			deduct = -1000;
+//			user->setUserBalance(deduct);
+//			credits = 100000;
+//			break;
+//		}
+//	}
+//
+//	startMachine(user, credits);
+//}
 
 
 double Slots::getCredits()
@@ -97,7 +96,7 @@ double Slots::getCredits()
 
 //--------------------------------------------------------------SLOT FUNCTIONS------------------------------------------------------------------------------
 
-void Slots::startMachine(Account *user, int credits)
+void Slots::startMachine(Account *user)
 {
 	SlotMachine machine;
 	Validate validate;
@@ -107,17 +106,20 @@ void Slots::startMachine(Account *user, int credits)
 	machine.creditAmount = credits;
 	// ADD LUCK AND MISFORTUNE FEATURE IN THIS LINE
 
-
-	cout << "USER HAS THIS MANY CREDITS IN THEIR ACCOUNT" << credits << endl;
-
 	while (play)
 	{
-		bool status = false;
+		bool status = false; // Controls second while loop. This loop is responsible for printing the slot machine's main menu
+
 		int userOption = 0; // Variable to hold if user wants to spin again
 		int slotOption = 0;
+
 		int *activatedLines;
 		int lines = 0;
 		activatedLines = &lines;
+
+		double *credit;
+		credit = &credits;
+		machine.creditAmount = 0;
 
 		int betAmount = 0; // Bet amounts = 1000, 500, 100, 50, 10
 
@@ -151,24 +153,34 @@ void Slots::startMachine(Account *user, int credits)
 			cout << " 100 CREDITS                      3. View Lines Table                      &                                " << endl;
 			cout << " 500 CREDITS                      4. Set Bet Amount                        @                                " << endl;
 			cout << "1000 CREDITS                      5. Set Number of Lines                                                    " << endl;
-			cout << "                                  6. Exit                                                                   " << endl;
+			cout << "                                  6. Enter Credits                                                          " << endl;
+			cout << "                                  7. Exit                                                                   " << endl;
 			cout << endl;
-			cout << "CREDITS: " << machine.creditAmount << endl;
+			cout << "                                                CREDITS: " << machine.creditAmount << endl;
 			cout << "Please enter an option: ";
 			
 			slotOption = 0;
 			userOption = 0;
 	
-			slotOption = validate.inputValidate(1, 6);
+			slotOption = validate.inputValidate(1, 7);
 
 			
 				if (slotOption == 1) // Spin the wheel
 				{
 					if (betFlag && lineFlag)
 					{
-						userOption = 1;
-						status = false;
-						running = false;
+						int bet_amount[6] = { 10, 50, 100, 500, 1000 };
+
+						if (credits < bet_amount[betAmount-1])
+						{
+							cout << "Not enough credits" << endl;
+						}
+						else
+						{
+							userOption = 1;
+							status = false;
+							running = false;
+						}
 					}
 
 					else if (betFlag && !lineFlag)
@@ -233,8 +245,46 @@ void Slots::startMachine(Account *user, int credits)
 
 				else if (slotOption == 6)
 				{
+					int creditSelection = 0;
+					cout << "Select the number of credits you wish to put into the machine  " << endl;
+					cout << " ______________________________________              " << endl;
+					cout << "|               CREDITS                |             " << endl;
+					cout << "|======================================|             " << endl;
+					cout << "|       1. $1 = 100 Credits            |             " << endl;
+					cout << "|       2. $10 = 1000 Credits          |             " << endl;
+					cout << "|       3. $50 = 5000 Credits          |             " << endl;
+					cout << "|       4. $100 = 10,000 Credits       |             " << endl;
+					cout << "|       5. $500 = 50,000 Credits       |             " << endl;
+					cout << "|       6. $1,000 = 100,000 Credits    |             " << endl;
+					cout << "|______________________________________|             " << endl;
+					
+					creditSelection = validate.inputValidate(1, 6);
+
+					double creditLine[6] = { 100, 1000, 5000, 10000, 50000, 100000 }; // Array that holds the credit amounts
+					double deductAmount[6] = { -1, -10, -50, -100, -500, -1000 }; // Array that holds the cash amount to deduct from user's balance
+					
+					if (user->getUserBalance() <= (-1 * (deductAmount[creditSelection - 1])))
+					{
+						cout << "You do not have enough money" << endl;
+					}
+
+					else
+					{
+						user->setUserBalance(deductAmount[creditSelection - 1]);
+						credits += creditLine[creditSelection - 1];
+						cout << credits << " CREDITS ADDED" << endl;
+						machine.creditAmount = credits;
+					}
+
+				}
+
+				else if (slotOption == 7) // User chooses to exit machine
+				{
 					running = false;
 					status = false;
+					exitMachine(user, credit);
+					userOption = 2;
+
 				}
 			}
 		}
@@ -245,55 +295,66 @@ void Slots::startMachine(Account *user, int credits)
 		{
 			bool respin = true;
 			vector<string> slots;
-			
-
+			double bet_amount[6] = { 10, 50, 100, 500, 1000 };
 			while (respin)
 			{
+				double creditBet = 0;
+				double betMultiplier = 0;
 				if (machine.creditAmount < 0)
 				{
 					cout << "Not enough credits available" << endl;
 					respin = false;
 					status = false;
 				}
-				cout << "BET AMOUNT: " << betAmount << endl;
+
+				cout << "------------------ SPIN -------------------" << endl;
+
+				
+				cout << endl;
+				betMultiplier = (bet_amount[betAmount - 1] / 100);
+				creditBet = ((bet_amount[betAmount - 1] / 100) * (*activatedLines));
+				cout << "BET AMOUNT: $" << std::setprecision(2) << std::fixed << creditBet << endl;
 				cout << "LINES IN PLAY: " << *activatedLines << endl;
-				cout << "CREDITS: " << machine.creditAmount << endl;
+				cout << "BALANCE: $" << ((machine.creditAmount/100) - creditBet) << endl;
+				cout << endl;
+			
 
 				switch (betAmount) // Deduct bet amount from the slot machine; @param betAmount set by user
 				{
 					case (1):
 					{
-						machine.creditAmount -= 10;
+						machine.creditAmount -= ((10) * (*activatedLines));
 						break;
 					}
 
 					case(2):
 					{
-						machine.creditAmount -= 50;
+						machine.creditAmount -= ((50) * (*activatedLines));
 						break;
 					}
 
 					case(3):
 					{
-						machine.creditAmount -= 100;
+						machine.creditAmount -= ((100) * (*activatedLines));
 						break;
 					}
 
 					case(4):
 					{
-						machine.creditAmount -= 500;
+						machine.creditAmount -= ((500) * (*activatedLines));
 						break;
 					}
 
 					case(5):
 					{
-						machine.creditAmount -= 1000;
+						machine.creditAmount -= ((1000) * (*activatedLines));
 					}
 
 					default:
 						break;
 				}
-				if (betAmount == 1) // 26.7 % ODDS
+
+				if (betAmount == 1) // 13% ODDS => Low odds because player can afford higher volume of spins than if bet amount was higher
 				{
 					string symbols[] = { "$", "#", "&", "@", "$", "#", "&", "$", "#", "&", "@", "$", "#", "&", "$", "#", "&", "$", "#", "&", "@", "$", "#", "&", "@", "$", "#", "&", "@", "#" }; // Bet Amount 10
 
@@ -372,8 +433,6 @@ void Slots::startMachine(Account *user, int credits)
 					}
 				}
 
-
-
 				for (int i = 0; i < 3; i++)
 				{
 					for (int k = 0; k < 3; k++)
@@ -388,14 +447,14 @@ void Slots::startMachine(Account *user, int credits)
 				if (*activatedLines <= 3)
 				{
 					winnings += threeLines(symbol, slotDisplay, activatedLines);
-					winnings *= betAmount;
+					winnings *= betMultiplier;
 				}
 
 				else if (*activatedLines > 3 && *activatedLines <= 5)
 				{
 					winnings += threeLines(symbol, slotDisplay, activatedLines);					// Line greater than or equal to 3
 					winnings += fiveLines(symbol, slotDisplay, activatedLines);
-					winnings *= betAmount;
+					winnings *= betMultiplier;
 				}
 
 				else if (*activatedLines > 5 && *activatedLines <= 7)
@@ -403,7 +462,7 @@ void Slots::startMachine(Account *user, int credits)
 					winnings += threeLines(symbol, slotDisplay, activatedLines);
 					winnings += fiveLines(symbol, slotDisplay, activatedLines);
 					winnings += sixLines(symbol, slotDisplay, activatedLines);
-					winnings *= betAmount;
+					winnings *= betMultiplier;
 				}
 
 				else if (*activatedLines > 7 && *activatedLines <= 9)
@@ -412,7 +471,7 @@ void Slots::startMachine(Account *user, int credits)
 					winnings += fiveLines(symbol, slotDisplay, activatedLines);
 					winnings += sixLines(symbol, slotDisplay, activatedLines);
 					winnings += eightLines(symbol, slotDisplay, activatedLines);
-					winnings *= betAmount;
+					winnings *= betMultiplier;
 				}
 
 				else if (*activatedLines > 9 && *activatedLines <= 11)
@@ -422,7 +481,7 @@ void Slots::startMachine(Account *user, int credits)
 					winnings += sixLines(symbol, slotDisplay, activatedLines);
 					winnings += eightLines(symbol, slotDisplay, activatedLines);
 					winnings += tenLines(symbol, slotDisplay, activatedLines);
-					winnings *= betAmount;
+					winnings *= betMultiplier;
 				}
 
 				else if (*activatedLines > 11 && *activatedLines <= 13)
@@ -433,7 +492,7 @@ void Slots::startMachine(Account *user, int credits)
 					winnings += eightLines(symbol, slotDisplay, activatedLines);
 					winnings += tenLines(symbol, slotDisplay, activatedLines);
 					winnings += twelveLines(symbol, slotDisplay, activatedLines);
-					winnings *= betAmount;
+					winnings *= betMultiplier;
 				}
 
 				else if (*activatedLines > 13 && *activatedLines <= 15)
@@ -445,7 +504,7 @@ void Slots::startMachine(Account *user, int credits)
 					winnings += tenLines(symbol, slotDisplay, activatedLines);
 					winnings += twelveLines(symbol, slotDisplay, activatedLines);
 					winnings += fourteenLines(symbol, slotDisplay, activatedLines);
-					winnings *= betAmount;
+					winnings *= betMultiplier;
 				}
 
 				else if (*activatedLines > 15 && *activatedLines <= 17)
@@ -458,15 +517,18 @@ void Slots::startMachine(Account *user, int credits)
 					winnings += twelveLines(symbol, slotDisplay, activatedLines);
 					winnings += fourteenLines(symbol, slotDisplay, activatedLines);
 					winnings += sixteenLines(symbol, slotDisplay, activatedLines);
-					winnings *= betAmount;
+					winnings *= betMultiplier;
 				}
 
+				winnings = winnings * 100;
 				machine.creditAmount += winnings; // Add the winnings to the credit amount
 
+				credits = machine.creditAmount;
 				delete[] slotDisplay; // Delete 2d Array
-
-
-				cout << winnings << endl;
+				
+				cout << endl;
+				cout << "WIN : $" << (winnings/100) << endl;
+				cout << "-------------------------------------------" << endl;
 
 				cout << "Would you like to spin again?" << endl;
 				cout << "1. Spin again!" << endl;
@@ -476,7 +538,26 @@ void Slots::startMachine(Account *user, int credits)
 				playAgain = validate.inputValidate(1, 3);
 				if (playAgain == 1)
 				{
-					play = true;
+					if (machine.creditAmount <= 0)
+					{
+						int addCredit = 0;
+						cout << "You do not have enough credits" << endl;
+						cout << "Would you like to enter more credits?" << endl;
+						cout << "1. Yes" << endl;
+						cout << "2. No" << endl;
+						addCredit = validate.inputValidate(1, 2);
+						switch (addCredit)
+						{
+							case(1):
+								break;
+								respin = false;
+							case(2):
+								respin = false;
+								play = false;
+								break;
+						}
+
+					}
 				}
 
 				else if (playAgain == 2)
@@ -488,11 +569,14 @@ void Slots::startMachine(Account *user, int credits)
 
 				else if (playAgain == 3)
 				{
+					exitMachine(user, credit); // User chooses to exit machine so we convert their credits into cash
 					running = false;
 					respin = false;
 					play = false;
 					symbol = NULL; // Leave no dangling pointers
+					credit = NULL;
 					delete symbol; // Delete symbol pointer
+					delete credit;
 				}
 			}
 		}
@@ -501,8 +585,14 @@ void Slots::startMachine(Account *user, int credits)
 		{
 			running = false;
 			play = false;
+			exitMachine(user, credit); // User chooses to exit machine so we convert their credits into cash
+			credit = NULL;
+			delete credit;
 		}
+
+
 	}
+
 }
 
 double Slots::threeLines(string *symbol, string **reel, int *lines)
@@ -514,7 +604,6 @@ double Slots::threeLines(string *symbol, string **reel, int *lines)
 
 	if (*lines == 1) // ONLY ONE LINE ACTIVATED
 	{
-		cout << "LINE 1 ACTIVATED" << endl;
 		for (i = 0; i < 4; i++)
 		{
 			if (reel[1][0] == symbol[i] && reel[1][1] == symbol[i] && reel[1][2] == symbol[i])
@@ -528,7 +617,6 @@ double Slots::threeLines(string *symbol, string **reel, int *lines)
 
 	else if (*lines == 2) // ONLY TWO LINES ACTIVATED
 	{
-		cout << "LINE 2 ACTIVATED" << endl;
 		for (i = 0; i < 4; i++)
 		{
 			if (reel[1][0] == symbol[i] && reel[1][1] == symbol[i] && reel[1][2] == symbol[i])
@@ -552,7 +640,6 @@ double Slots::threeLines(string *symbol, string **reel, int *lines)
 
 	else if (*lines >= 3) // THREE LINES ACTIVATED
 	{
-		cout << "LINE 3 ACTIVATED" << endl;
 		for (i = 0; i < 4; i++)
 		{
 			if (reel[1][0] == symbol[i] && reel[1][1] == symbol[i] && reel[1][2] == symbol[i]) // Line 1 winner
@@ -604,14 +691,11 @@ double Slots::threeLines(string *symbol, string **reel, int *lines)
 
 double Slots::fiveLines(string *symbol, string **reel, int *lines) // 3 ~ 5 lines activated
 {
-	cout << "LINE 4 and 5 ACTIVATED" << endl;
 	double winnings = 0;
 	for (int i = 0; i < 4; i++)
 	{
 		if (*lines == 4)
 		{
-			cout << "LINE 4 ACTIVATED" << endl;
-
 			if (reel[2][0] == symbol[i] && reel[1][1] == symbol[i] && reel[0][2] == symbol[i]) // Line 4
 			{
 				cout << "WINNER LINE 4" << endl;
@@ -649,7 +733,6 @@ double Slots::sixLines(string *symbol, string **reel, int *lines) // 6 ~ 7 lines
 {
 	double winnings = 0;
 
-	cout << "LINES 6 and 7 ACTIVATED" << endl;
 	for (int i = 0; i < 4; i++)
 	{
 		if (*lines == 6) // SIX LINES ACTIVATED
@@ -690,8 +773,7 @@ double Slots::sixLines(string *symbol, string **reel, int *lines) // 6 ~ 7 lines
 double Slots::eightLines(string *symbol, string **reel, int *lines) // 8 ~ 9 lines activated
 {
 	double winnings = 0;
-	cout << "LINES 8 and 9 ACTIVATED" << endl;
-	
+
 	for (int i = 0; i < 4; i++)
 	{
 		if (*lines == 8) // LINE 8 ACTIVATED
@@ -733,7 +815,7 @@ double Slots::eightLines(string *symbol, string **reel, int *lines) // 8 ~ 9 lin
 double Slots::tenLines(string *symbol, string **reel, int *lines) // 10 ~ 11 lines activated
 {
 	double winnings = 0;
-	cout << "LINES 10 and 12 ACTIVATED" << endl;
+
 	for (int i = 0; i < 4; i++)
 	{
 		if (*lines == 10) // TEN LINES ACTIVATED
@@ -772,7 +854,6 @@ double Slots::tenLines(string *symbol, string **reel, int *lines) // 10 ~ 11 lin
 double Slots::twelveLines(string *symbol, string **reel, int *lines) // 12 ~ 13 lines activated
 {
 	double winnings = 0;
-	cout << "LINES 12 and 13 ACTIVATED" << endl;
 
 	for (int i = 0; i < 4; i++)
 	{
@@ -814,7 +895,7 @@ double Slots::twelveLines(string *symbol, string **reel, int *lines) // 12 ~ 13 
 double Slots::fourteenLines(string *symbol, string **reel, int *lines) //14 ~ 16 lines activated
 {
 	double winnings = 0;
-	cout << "LINES 14 and 16 ACTIVATED" << endl;
+
 	for (int i = 0; i < 4; i++)
 	{
 		if (*lines == 14)
@@ -855,7 +936,6 @@ double Slots::fourteenLines(string *symbol, string **reel, int *lines) //14 ~ 16
 double Slots::sixteenLines(string *symbol, string **reel, int *lines) // 16 ~ 17 lines activated
 {
 	double winnings = 0;
-	cout << "LINES 16 and 17 ACTIVATED" << endl;
 
 	for (int i = 0; i < 4; i++)
 	{
@@ -974,6 +1054,17 @@ void Slots::displayLines()
 
 )";
 
+}
+
+void Slots::exitMachine(Account *user, double *credit) // Convert user's credits into cash and deposit into account
+{
+	double conversion = 0;
+	cout << "CREDIT WHEN EXITING" << *credit << endl;
+	conversion = (*credit / 100);
+
+	user->setUserBalance(conversion);
+
+	cout << "$" << conversion << " has been deposited into your account" << endl;
 }
 
 Slots::~Slots()

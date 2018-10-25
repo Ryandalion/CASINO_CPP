@@ -5,6 +5,7 @@
 #include <random>
 #include <chrono>
 #include <map>
+#include <iomanip>
 
 using std::map;
 
@@ -27,9 +28,7 @@ class Slots
 {
 public:
 	Slots();
-	void setCredits(Slots *machine, int credits);
 	void startSlots(Account *user);
-	void setCredits(Account *user);
 	double getCredits();
 
 	double calculateWinner(string reel[][3], int lines);
@@ -43,12 +42,14 @@ public:
 	double fourteenLines(string *symbol, string **reel, int *lines); //14 ~ 16 lines activated
 	double sixteenLines(string *symbol,string **reel, int *lines); // 16 ~ 17 lines activated
 
-	void startMachine(Account *user, int credits);
+	void startMachine(Account *user);
 	void displayLines();
+	void exitMachine(Account *user, double *credits);
+
 	~Slots();
 
 private:
-	double credits;
+	double credits = 0;
 
 };
 
