@@ -27,11 +27,8 @@ void Slots::startMachine(Account *user)
 	bool play = true;
 
 	machine.userName = user->getName(); // Set user's name to the machine name
-	machine.creditAmount = credits;
 	machine.creditAmount = 0;
-	// ADD LUCK AND MISFORTUNE FEATURE IN THIS LINE
-	int creditUpdate = 0;
-	cout << "BEFORE PLAY LOOP" << endl;
+	double creditUpdate = 0;
 
 	while (play)
 	{
@@ -45,14 +42,13 @@ void Slots::startMachine(Account *user)
 		activatedLines = &lines;
 
 		double *credit;
-		credit = &credits;
+		credit = &creditUpdate;
 
 		int betAmount = 0; // Bet amounts = 1000, 500, 100, 50, 10
 
 		bool running = true; // Bool indicator for main while loop
 
 		machine.creditAmount = creditUpdate;
-		cout << "CREDIT BEFORE SLOTS PICTURE " << machine.creditAmount << endl;
 
 		while(running)
 		{
@@ -215,8 +211,6 @@ void Slots::startMachine(Account *user)
 				{
 					running = false;
 					status = false;
-					machine.creditAmount = creditUpdate;
-					exitMachine(user, credit);
 					userOption = 2;
 
 				}
@@ -660,6 +654,7 @@ void Slots::startMachine(Account *user)
 					else if (playAgain == 3)
 					{
 						creditUpdate = machine.creditAmount;
+						cout << "CREDIT UPDATE AMOUNT " << creditUpdate << endl;
 						exitMachine(user, credit); // User chooses to exit machine so we convert their credits into cash
 						running = false;
 						respin = false;
@@ -677,6 +672,7 @@ void Slots::startMachine(Account *user)
 		{
 			running = false;
 			play = false;
+			cout << "CREDIT UPDATE AMOUNT WHEN USER OPTION == 2 " << creditUpdate<< endl;
 			credits = machine.creditAmount;
 			exitMachine(user, credit); // User chooses to exit machine so we convert their credits into cash
 			credit = NULL;
@@ -1156,6 +1152,7 @@ void Slots::exitMachine(Account *user, double *credit) // Convert user's credits
 	double conversion = 0;
 	conversion = (*credit / 100);
 
+	cout << "CREDIT UPDATE IN EXIT MACHINE AMOUNT " << *credit << endl;
 	user->setUserBalance(conversion);
 	user->setUserLuck(0); // Remove luck since drink has worn off
 	user->setUserMisfortune(0); // Remove misfortune since drink has worn off
