@@ -61,8 +61,8 @@ private:
 	double winningPerSession;
 	double totalBalance;
 	
-	int luck;
-	int misfortune;
+	int luck = 0;
+	int misfortune = 0;
 };
 
 #endif

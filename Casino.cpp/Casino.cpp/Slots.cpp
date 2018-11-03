@@ -215,6 +215,7 @@ void Slots::startMachine(Account *user)
 				{
 					running = false;
 					status = false;
+					machine.creditAmount = creditUpdate;
 					exitMachine(user, credit);
 					userOption = 2;
 
@@ -341,12 +342,11 @@ void Slots::startMachine(Account *user)
 					default:
 						break;
 					}
-					cout << "MACHINE CREDIT AMOUNT (75) after switch occurs " << machine.creditAmount << endl;
 
 
-					if (betAmount == 1) // 5 CREDITS - 14% ODDS
+					if (betAmount == 1) // 5 CREDITS - 23% ODDS
 					{
-						string symbols[] = { "$", "#", "&", "@", "^", "^", "^", "^", "#", "&", "@", "$", "#", "&", "@", "$", "#", "&", "@", "$", "^", "^", "^", "^", "#", "&", "@", "$", "^", "^" }; // Bet Amount 5
+						string symbols[] = {"$","#","&","@","$","#","&","^","@","$","#","&","@","$","#","&","@","$","^","#","&","@","$","#","&","@","$","#","&","@"};
 
 						for (int i = 0; i < 30; i++)
 						{
@@ -354,9 +354,9 @@ void Slots::startMachine(Account *user)
 						}
 					}
 
-					else if (betAmount == 2) // 10 CREDITS - 12% ODDS
+					else if (betAmount == 2) // 10 CREDITS - 20% ODDS
 					{
-						string symbols[] = { "$", "#", "&", "@", "$", "#", "&", "$", "#", "&", "@", "$", "#", "&", "$", "#", "&", "$", "#", "&", "@", "$", "#", "&", "@", "$", "#", "&", "@", "#" }; // Bet Amount 5
+						string symbols[] = { "^","$","#","&","@","$","^","^","#","&","@","$","#","&","@","$","#","&","@","$","#","^","&","@","$","#","&","@","^","^" };
 
 						for (int i = 0; i < 30; i++)
 						{
@@ -364,9 +364,9 @@ void Slots::startMachine(Account *user)
 						}
 					}
 
-					else if (betAmount == 3) // 25 CREDITS - 8% ODDS
+					else if (betAmount == 3) // 25 CREDITS - 16.67% ODDS
 					{
-						string symbols[] = { "$", "#", "&", "@", "$", "#", "&", "$", "#", "&", "@", "$", "#", "&", "$", "#", "&", "$", "#", "&", "@", "$", "#", "&", "@", "$", "#", "&", "@", "#" }; // Bet Amount 10
+						string symbols[] = { "$","#","&","@","^","^","^","^","^","$","#","&","@", "$","#","&","@", "$","#","&","@","$","#","&","@", "^","^","^","^","^"};
 
 						for (int i = 0; i < 30; i++)
 						{
@@ -374,36 +374,36 @@ void Slots::startMachine(Account *user)
 						}
 					}
 
-					else if (betAmount == 3) // 50 CREDITS - 7% ODDS
+					else if (betAmount == 3) // 50 CREDITS - 13.45% ODDS
 					{
-						string symbols[] = { "$","#","&","@","^","$","#","&","@","^","$","#","&","@","^","$","#","&","@","^","$","#","&","@","^","$","#","&","@","^" };
+						string symbols[] = { "$","#","&","@","^","^","^","^","$","#","&","@","$","#","&","@","$","#","&","@","^","^","^","^","^","^","^","^","#","$"};
 						for (int i = 0; i < 30; i++)
 						{
 							slots.push_back(symbols[i]);
 						}
 					}
 
-					else if (betAmount == 4) // 75 CREDITS - 6% ODDS
+					else if (betAmount == 4) // 75 CREDITS - 13.45% ODDS
 					{
-						string symbols[] = { "$","#","&","@","^","$","#","&","@","^","$","#","&","@","^","$","#","&","@","^","$","#","&","@","^","$","#","&","@","^" };
+						string symbols[] = {"$","#","&","@","^","^","^","^","$","#","&","@","$","#","&","@","$","#","&","@","^","^","^","^","^","^","^","^","#","$"};
 						for (int i = 0; i < 30; i++)
 						{
 							slots.push_back(symbols[i]);
 						}
 					}
 
-					else if (betAmount == 5) // 100 CREDITS - 5% ODDS
+					else if (betAmount == 5) // 100 CREDITS - 13.28% ODDS
 					{
-						string symbols[] = { "#","^", "$","@","&","^", "#","$","^","@","&","^","#","$","@","^","&","^", "^","#","$","@","&","^","#","$","@","&","^","^" };
+						string symbols[] = {"$","#","&","@","^","^","^","^","$","#","&","@","$","#","&","@","$","#","&","@","^","^","^","^","^","^","^","^","^","^"};
 						for (int i = 0; i < 30; i++)
 						{
 							slots.push_back(symbols[i]);
 						}
 					}
 
-					else if (betAmount == 6) // 250 CREDITS - 4% ODDS
+					else if (betAmount == 6) // 250 CREDITS - 3% ODDS
 					{
-						string symbols[] = { "&","^", "$","^", "#","^", "@","^", "&","^", "$","^", "#","^", "@","^", "&","^", "$","^", "#","^", "@","^", "&","^", "$","^", "#", "@" };
+						string symbols[] = { "$","#","&","@","^","^","^","^","^","^","$","#","&","@","^","^","^","^","^","^","$","#","&","@","^","^","^","^","^","^"};
 						for (int i = 0; i < 30; i++)
 						{
 							slots.push_back(symbols[i]);
@@ -412,7 +412,7 @@ void Slots::startMachine(Account *user)
 
 					else if (betAmount == 7) // 500 CREDITS - 3% ODDS
 					{
-						string symbols[] = { "^","^","$","^","#","^","^","&","^","^","@","^","^","$","^","^","#","^","^","&","^","^","@","$","^","#","&","@","^","^" };
+						string symbols[] = { "$","#","&","@","^","^","^","^","^","^","$","#","&","@","^","^","^","^","^","^","$","#","&","@","^","^","^","^","^","^" };
 						for (int i = 0; i < 30; i++)
 						{
 							slots.push_back(symbols[i]);
@@ -461,7 +461,6 @@ void Slots::startMachine(Account *user)
 						cout << endl;
 					}
 
-					cout << "MACHINE CREDIT AMOUNT (75) before being sent to check functions  " << machine.creditAmount << endl;
 					double winnings = 0; // Variable that will hold the winnings from each line check
 
 					if (*activatedLines <= 3)
@@ -538,21 +537,82 @@ void Slots::startMachine(Account *user)
 						winnings += fourteenLines(symbol, slotDisplay, activatedLines);
 						winnings += sixteenLines(symbol, slotDisplay, activatedLines);
 						winnings *= betMultiplier;
-						cout << "MACHINE CREDIT AMOUNT (17 LINES 75 CREDITS) " << machine.creditAmount << endl;
 					}
 
+		
+					if (winnings > 0 && user->getUserLuck() > 0 && user->getUserMisfortune() > 0)
+					{
+						int bonusActivation = rand() % 2;
+
+						if (bonusActivation == 0)
+						{
+							int luckAmount = user->getUserLuck(); // Retrieve user's luck 
+							int misfortuneAmount = user->getUserMisfortune(); // Retrieve user's misfortune
+							int symbolTotal = (luckAmount + misfortuneAmount); // Compute the sum of luck and misfortune. We will use this to fill sum to create a vector of size sum and select a symbol from the array which will execute a correspsonding activator
+
+							vector<char> symbolArray;
+
+							int j, k, n;
+							j = k = n = 0;
+							for (j = 0; j < luckAmount; j++) // LUCK represented by zeroes
+							{
+								symbolArray.push_back('x');
+							}
+
+							for (k = 0; k < misfortuneAmount; k++) // MISFORTUNE represented by ones
+							{
+								symbolArray.push_back('o');
+							}
+
+							std::random_shuffle(std::begin(symbolArray), std::end(symbolArray)); // Shuffle the symbols inside vector
+
+							int selectNum = rand() % symbolTotal; // Generate a random number that we will use to pull a random symbol from the vector
+
+							char symbolPulled = symbolArray[selectNum]; // Assign randomly pulled symbol to symbolPulled variable
+
+
+							if (symbolPulled == 'x') // If the symbol x is pulled we activate luck
+							{
+
+								float bonusFactor = 0;
+								float luckBonus[] = { 2, 3, 3.5 };
+								int luckyDraw = rand() % 3;
+								int megaKey = rand() % 3;
+								bonusFactor = luckBonus[luckyDraw];
+								cout << "It must be your lucky day! You have won an additional " << (bonusFactor * winnings) * 10 << " credits!" << endl;
+								winnings += (bonusFactor * winnings);
+							}
+
+
+							else if (symbolPulled == 'o') // If the symbol o is pulled we activate misfortune
+							{
+								float bonusFactor = 0;
+								float misfortuneBonus[] = { -.05, -.07, -.1 };
+								int misfortuneDraw = rand() % 3;
+								bonusFactor = misfortuneBonus[misfortuneDraw];
+
+								cout << "Uh oh! Today might no be your lucky day. You have just lost " << (bonusFactor * winnings) * 10 << " credits from your winnings!" << endl;
+
+								winnings += (bonusFactor * winnings);
+							}
+
+							winnings *= 10;
+							machine.creditAmount += winnings; // Add the winnings to the credit amount
+							credits = machine.creditAmount;
+							symbolArray.clear(); // Clear vector
+						}
+					}
 					
 
-					if (winnings > 0)
+					else if (winnings > 0)
 					{
 						winnings *= 10;
 						machine.creditAmount += winnings; // Add the winnings to the credit amount
 						credits = machine.creditAmount;
-						cout << "CREDITS IN MACHINE AFTER WIN" << credits << endl;
 					}
+
 					delete[] slotDisplay; // Delete 2d Array
 
-					cout << "CREDIT AMOUNT AFTER SLOTDISPLAY IS DELETED " << machine.creditAmount << endl;
 					cout << endl;
 					cout << "WIN : $" << (winnings / 100) << endl;
 					cout << "-------------------------------------------" << endl;
@@ -585,17 +645,12 @@ void Slots::startMachine(Account *user)
 
 					else if (playAgain == 1)
 					{
-					
-						cout << "CREDIT AMOUNT BEFORE WINNINGS PUT INTO MACHINE : " << machine.creditAmount << endl;
 						creditUpdate = machine.creditAmount;
-						cout << "CREDIT AMOUNT AFTER WINNINGS PUT INTO MACHINE : " << machine.creditAmount << endl;
-
 					}
 
 					
 					else if (playAgain == 2)
 					{
-						cout << "PLAY AGAIN 2 EXECUTED" << endl;
 						respin = false;
 						symbol = NULL; // Leave no dangling pointers
 						delete symbol; // Delete symbol pointer
@@ -604,7 +659,6 @@ void Slots::startMachine(Account *user)
 				
 					else if (playAgain == 3)
 					{
-						cout << "PlAY AGAIN 3 EXECUTED" << endl;
 						creditUpdate = machine.creditAmount;
 						exitMachine(user, credit); // User chooses to exit machine so we convert their credits into cash
 						running = false;
@@ -615,20 +669,12 @@ void Slots::startMachine(Account *user)
 						delete symbol; // Delete symbol pointer
 						delete credit;
 					}
-					cout << "EXECUTION AFTER PLAY AGAIN 2 and 3" << endl;
 				}
-
-				cout << "EXECUTION AFTER LOOP 1" << endl;
-				cout << "MACHINE CREDIT " << creditUpdate << endl;
 			}
-			cout << "EXECUTION AFTER LOOP 2" << endl;
-			cout << "MACHINE CREDIT " << creditUpdate << endl;
 		}
 
-		
 		else if (userOption == 2)
 		{
-		cout << "USER OPTIION 2 EXECUTED" << endl;
 			running = false;
 			play = false;
 			credits = machine.creditAmount;
@@ -1108,11 +1154,11 @@ void Slots::displayLines()
 void Slots::exitMachine(Account *user, double *credit) // Convert user's credits into cash and deposit into account
 {
 	double conversion = 0;
-	cout << "CREDIT WHEN EXITING" << *credit << endl;
 	conversion = (*credit / 100);
 
 	user->setUserBalance(conversion);
-
+	user->setUserLuck(0); // Remove luck since drink has worn off
+	user->setUserMisfortune(0); // Remove misfortune since drink has worn off
 	cout << "$" << conversion << " has been deposited into your account" << endl;
 }
 
