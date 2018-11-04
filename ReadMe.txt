@@ -22,3 +22,4 @@ SLOTS features:
 7) Error checking II. If user tries to spin without setting the number of lines or bet amount a message informs the user to do so.
 8) Credit to cash conversion when user exits machine.
 9) Ability to respin the wheel without having to re-enter preferences
+10) Bet multiplier determines the winning amount per lines.
