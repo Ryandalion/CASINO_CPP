@@ -1,10 +1,8 @@
-﻿  Slots.cpp
-c:\users\ryan\desktop\casino\casino.cpp\casino.cpp\slots.cpp(454): warning C4244: 'initializing': conversion from '_Rep' to 'unsigned int', possible loss of data
-          with
-          [
-              _Rep=std::chrono::system_clock::rep
-          ]
-c:\users\ryan\desktop\casino\casino.cpp\casino.cpp\slots.cpp(627): warning C4305: 'initializing': truncation from 'double' to 'float'
-c:\users\ryan\desktop\casino\casino.cpp\casino.cpp\slots.cpp(734): warning C4101: 'k': unreferenced local variable
-c:\users\ryan\desktop\casino\casino.cpp\casino.cpp\slots.cpp(861): warning C4715: 'Slots::fiveLines': not all control paths return a value
+﻿  Blackjack.cpp
+c:\users\ryan\desktop\casino\casino.cpp\casino.cpp\blackjack.cpp(13): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+  BlackjackRoom.cpp
+  CasinoGame.cpp
+  Main.cpp
+c:\users\ryan\desktop\casino\casino.cpp\casino.cpp\main.cpp(19): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+  Generating Code...
   Casino.cpp.vcxproj -> C:\Users\Ryan\Desktop\CASINO\Casino.cpp\x64\Debug\Casino.cpp.exe
