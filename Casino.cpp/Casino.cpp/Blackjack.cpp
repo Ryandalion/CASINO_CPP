@@ -16,8 +16,8 @@ void Blackjack::startPlay(Account *user)
 
 	cout << "Hello " << user->getName() << endl;
 	cout << endl;
-	cout << "Welcome to Blackjack. My name is " << dealer << " and I will be your dealer for today. ";
-	cout << "Please select the minimum bet amount. This amount will automatically placed every round." << endl;
+	cout << "Welcome to Blackjack. My name is " << dealer << " and I will be your dealer today. " << endl;
+	cout << "Please select a minimum bet amount. This amount will be automatically placed every round." << endl;
 	cout << "1. $5" << endl;
 	cout << "2. $10" << endl;
 	cout << "3. $25" << endl;
@@ -121,14 +121,6 @@ void Blackjack::initializeDeck(int size)
 		}
 	}
 
-
-	for (int i = 0; i < Cards.size(); i++)
-	{
-		cout << Cards[i].suit + " of " + Cards[i].face + " VALUE: " << Cards[i].value << endl;
-	}
-
-	cout << "Size of the deck: " << Cards.size() << endl;
-
 	shuffleDeck();
 	
 }
@@ -136,11 +128,6 @@ void Blackjack::initializeDeck(int size)
 void Blackjack::shuffleDeck()
 {
 	std::random_shuffle(Cards.begin(), Cards.end());
-	
-	for (int i = 0; i < Cards.size(); i++)
-	{
-		cout << Cards[i].suit + " of " + Cards[i].face + " VALUE: " << Cards[i].value << endl;
-	}
 
 }
 
@@ -241,10 +228,11 @@ void Blackjack::buyChips(Account *user)
 
 void Blackjack::startGame(Account *user) // Start Game
 {
+	Player player;
+	Player dealer_player;
+
 	bool running = false;
-	bool deal = false;
-	bool player_turn = false;
-	bool dealer_turn = false;
+
 	bool player_funds = false;
 
 	buyChips(user); // Get chips for user
@@ -256,10 +244,44 @@ void Blackjack::startGame(Account *user) // Start Game
 	// All financial transactions from here are done via chips
 	while (running != true)
 	{
+
 		int player_1 = 0;
 		int dealer = 0;
+
+		int *player_score = new int;
+		int *dealer_score = new int;
+
+		player_score = &player_1;
+		dealer_score = &dealer;
+
+		int player_card = 0;
+		int dealer_card = 0;
+
+		int potSize = 0;
+
+		string players_hand = "";
+		string dealers_hand = "";
+
+		bool deal = false;
 		bool firstHand = true;
+		bool firstRound = true;
+
+		bool playerStandby = false;
+		bool dealerStandby = false;
+
+		bool playerStand = false;
+		bool dealerStand = false;
+		bool dealerStay = false;
+
 		bool dealerAce = false;
+		bool playerAce = false;
+
+		bool playerBust = false;
+		bool dealerBust = false;
+
+		bool playerBlackjack = false;
+		bool dealerBlackjack = false;
+
 
 		if (chipStack < betSize)
 		{
@@ -267,52 +289,113 @@ void Blackjack::startGame(Account *user) // Start Game
 			running = true;
 		}
 
-		placeBet(user);
+		potSize = placeBet(user);
+
 		cout << "Dealing cards..." << endl;
+		cout << endl;
 		while (deal != true)
 		{	
-			if (player_turn != true)
+			cout << "----------------------------------------------------" << endl;
+			if (firstHand) // First Hand
 			{
-				if (player_1 == 21)
+				cout << "Player's Hand: ";
+				players_hand = Cards.front().face + " of " + Cards.front().suit;
+				cout << players_hand << endl;
+				if (Cards.front().value == 0)
 				{
-					cout << "Player has hit Blackjack" << endl;
-				}
-
-				else if (player_1 > 21)
-				{
-					cout << "Player has bust" << endl;
+					player_card = 10;
+					if (Cards.front().face == "Ace")
+					{
+						playerAce = true;
+						cout << "*Ace is either 1 or 11" << endl;
+						player_card = 11;
+					}
 				}
 
 				else
 				{
-					cout << "Player's turn" << endl;
-					cout << Cards.front().face + " of " + Cards.front().suit;
-					int player_card = Cards.front().value;
-					player_1 += player_card;
-					cout << "Current Hand Value: " << player_1 << endl;
-					Cards.erase(Cards.begin(), Cards.begin() + 1);
-					player_turn = true;
-					dealer_turn = false;
+					player_card = Cards.front().value;
 				}
+
+				player_1 = player_1 + player_card;
+				player.cards = players_hand;
+				player.handValue = player_1;
+				cout << "Player's Hand Value: " << player_1 << endl;
+				cout << "----------------------------------------------------" << endl;
+				Cards.erase(Cards.begin(), Cards.begin() + 1);
+
+				cout << "Dealer's Hand: ";
+				dealers_hand = Cards.front().face + " of " + Cards.front().suit;
+				cout << dealers_hand << endl;
+				if (Cards.front().value == 0)
+				{
+					dealer_card = 10;
+
+					if (Cards.front().face == "Ace")
+					{
+						cout << "*Ace is either 1 or 11" << endl;
+						placeInsurance(user);
+						dealer_card = 11;
+						dealerAce = true;
+					}
+				}
+
+				else
+				{
+					dealer_card = Cards.front().value;
+				}
+
+				dealer = dealer + dealer_card;
+				dealer_player.cards = dealers_hand;
+				dealer_player.handValue = dealer;
+				cout << "Dealer's Hand Value: " << dealer << endl;
+				Cards.erase(Cards.begin(), Cards.begin() + 1);
+				firstHand = false;
 			}
 
-			else if (dealer_turn != true)
+			// After First Round
+			if (!playerStand && !firstRound) // If player has chose to hit we allow execution, stop execution if the player chooses to stand
 			{
-				if (17 <= dealer < 21)
+				cout << endl;
+				cout << "Player's Hand: ";
+				players_hand = Cards.front().face + " of " +Cards.front().suit;
+				cout << players_hand << endl;
+				if (Cards.front().value == 0)
 				{
-					dealer_turn = true;
-				}
-
-				else if (dealer == 21)
-				{
-					cout << "Dealer has hit Blackjack" << endl;
+					player_card = 10;
+					if (Cards.front().face == "Ace")
+					{
+						cout << "*Ace is either be 1 or 11" << endl;
+						player_card = 11;
+					}
 				}
 
 				else
 				{
-					int dealer_card = 0;
-					cout << "Dealer's turn" << endl;
-					cout << Cards.front().face + " of " + Cards.front().suit;
+					player_card = Cards.front().value;
+				}
+
+				player_1 = player_1 + player_card;
+				player.cards = players_hand;
+				player.handValue = player_1;
+				cout << "Player's Hand Value: " << player_1 << endl;
+				cout << "----------------------------------------------------" << endl;
+				Cards.erase(Cards.begin(), Cards.begin() + 1);	
+			}
+
+
+			if (playerStand && !dealerStand)
+			{
+				if (17 <= dealer && dealer < 21)
+				{
+					dealerStay = true;
+				}
+
+				else
+				{
+					cout << "Dealer's Hand: ";
+					dealers_hand = Cards.front().face + " of " + Cards.front().suit;
+					cout << dealers_hand << endl;
 					if (Cards.front().value == 0)
 					{
 						dealer_card = 10;
@@ -323,50 +406,231 @@ void Blackjack::startGame(Account *user) // Start Game
 							dealerAce = true;
 						}
 					}
-
-					if (Cards.front().face == "Ace" && firstHand == true)
+					
+					else
 					{
-						placeInsurance(user);
-						firstHand = false;
-						dealer_card = 11;
-						dealerAce = true;
+						dealer_card = Cards.front().value;
 					}
-
-					dealer += dealer_card;
-					cout << "Current Hand Value: " << dealer << endl;
+					dealer = dealer + dealer_card;
+					dealer_player.cards = dealers_hand;
+					dealer_player.handValue = dealer;
+					cout << "Dealer's Hand Value: " << dealer << endl;
+					cout << "----------------------------------------------------" << endl;
 					Cards.erase(Cards.begin(), Cards.begin() + 1);
-					dealer_turn = true;
-					player_turn = false;
 				}
 			}
 
-			cout << "Please make a selection" << endl;
-			cout << "1. Hit" << endl;
-			cout << "2. Stand" << endl;
-			int choice = userInput.inputValidate(1, 2);
-			if (choice == 1)
+	
+			if (dealerStandby)
 			{
-				player_funds = placeBet(user);
+				cout << "STRUCT PRINT" << endl;
+				cout << "Dealer's Hand: " << dealer_player.cards << endl;
+				cout << "Dealer's Hand Value: " << dealer_player.handValue << endl;
 			}
+
+			if (playerStandby)
+			{
+				cout << "STRUCT PRINT" << endl;
+				cout << "Player's Hand: " << player.cards << endl;
+				cout << "Player's Hand Value: " << player.handValue << endl;
+			}
+
+			playerBust = checkBust(player_1);
+			dealerBust = checkBust(dealer);
+
+			playerBlackjack = checkBlackjack(player_1);
+			dealerBlackjack = checkBlackjack(dealer);
+
+			firstRound = false;
+
+			if (playerBust)
+			{
+				cout << "----------------------------------------------------" << endl;
+				cout << "Player has bust" << endl;
+				cout << "Dealer wins" << endl;
+				calculateWinnings(user, potSize);
+				deal = true;
+			}
+
+			if (dealerBust) 
+			{
+				cout << "----------------------------------------------------" << endl;
+				cout << "Dealer has bust" << endl;
+				cout << "Player wins" << endl;
+				calculateWinnings(user, potSize);
+				deal = true;
+			}
+
+			if (playerBlackjack)
+			{
+				cout << "----------------------------------------------------" << endl;
+				cout << "Player has hit Blackjack" << endl;
+				calculateWinnings(user, potSize);
+				deal = true;
+			}
+
+			if (dealerBlackjack)
+			{
+				cout << "----------------------------------------------------" << endl;
+				cout << "Dealer has hit Blackjack" << endl;
+				dealerWin(user, potSize);
+				deal = true;
+			}
+
+			if (dealerStay)
+			{
+				cout << "----------------------------------------------------" << endl;
+				if (player_1 > dealer)
+				{
+					cout << "Player has won" << endl;
+					calculateWinnings(user, potSize);
+				}
+
+				else
+				{
+					cout << "Dealer has won" << endl;
+					calculateWinnings(user, potSize);
+				}
+
+				playerBust = false;
+				dealerBust = false;
+				playerBlackjack = false;
+				dealerBlackjack = false;
+				deal = true;
+			}
+
+			if (!playerBust && !dealerBust && !dealerBlackjack && !playerBlackjack && !playerStand)
+			{
+				bool repeat = true;
+
+				while (repeat == true)
+				{
+					cout << "---------------------------------------------------" << endl;
+					cout << "Please make a selection" << endl;
+					cout << "1. Hit" << endl;
+					cout << "2. Stand" << endl;
+					cout << "3. View chip stack" << endl;
+					cout << "4. View pot size" << endl;
+					cout << "----------------------------------------------------" << endl;
+					int choice = userInput.inputValidate(1, 3);
+					cout << "----------------------------------------------------" << endl;
+					if (choice == 1)
+					{
+						potSize += placeBet(user);
+						dealerStand = true;
+						playerStand = false;
+						dealerStandby = true;
+						playerStandby = false;
+						repeat = false;
+					}
+
+					else if (choice == 2)
+					{
+						cout << "You have chosen to stand" << endl;
+						cout << endl;
+						playerStand = true;
+						dealerStand = false;
+						playerStandby = true;
+						dealerStandby = false;
+						repeat = false;
+					}
+
+					else if(choice == 3)
+					{
+						cout << "Current chip stack: $" << chipStack << endl;
+						cout << endl;
+					}
+
+					else
+					{
+						cout << "Current pot size: $" << potSize << endl;
+						cout << endl;
+					} 
+				}
+
+			}
+
+
+		}
+
+		cout << "----------------------------------------------------" << endl;
+		cout << "Would you like to play another round?" << endl;
+		cout << "1. Yes" << endl;
+		cout << "2. Exit Blackjack" << endl;
+		cout << "----------------------------------------------------" << endl;
+		int choice = userInput.inputValidate(1, 2);
+		cout << "----------------------------------------------------" << endl;
+		if (choice == 1)
+		{
+			running = false;
+		}
+		else if (choice == 2)
+		{
+			running = true;
+
+			player_score = NULL;
+			dealer_score = NULL;
+
+			delete player_score;
+			delete dealer_score;
 
 		}
 	}
 }
 
+void Blackjack::dealerWin(Account *user, int potSize)
+{
+	if (insurance)
+	{
+		cout << "Player has insurance" << endl;
+	}
+}
+
+bool Blackjack::checkBust(int hand)
+{
+	bool userBust = false;
+
+	if (hand > 21)
+	{
+		userBust = true;
+	}
+
+	return userBust;
+}
+
+void Blackjack::calculateWinnings(Account *user, int potsize)
+{
+
+}
+
+bool Blackjack::checkBlackjack(int hand)
+{
+	bool blackjack = false;
+
+	if (hand == 21)
+	{
+		blackjack = true;
+	}
+
+	return blackjack;
+}
 
 void Blackjack::placeInsurance(Account *user)
 {
-	// ONLY EXECUTE INSURANCE IF DEALER HAS ACE
+
 	insurance = false;
 	bool insuranceLoop = false;
 	while (insuranceLoop != true)
 	{
+		cout << "----------------------------------------------------" << endl;
 		cout << "Would you like to buy insurance?" << endl;
 		cout << "1. Yes" << endl;
 		cout << "2. No" << endl;
 		cout << "3. What is insurance?" << endl;
+		cout << "----------------------------------------------------" << endl;
 		int choice = 0;
 		choice = userInput.inputValidate(1, 3);
+		cout << "----------------------------------------------------" << endl;
 		if (choice == 1)
 		{
 			double insurancePrice = (betSize * .5);
@@ -398,7 +662,7 @@ void Blackjack::placeInsurance(Account *user)
 	}
 }
 
-bool Blackjack::placeBet(Account *user)
+int Blackjack::placeBet(Account *user)
 {
 	bool valid = false;
 	while (valid != true)
@@ -492,7 +756,10 @@ bool Blackjack::placeBet(Account *user)
 				valid = insufficientFunds(user);
 			}
 		}
+
 	}
+
+	return betAmount;
 }
 
 void Blackjack::currentBet()
