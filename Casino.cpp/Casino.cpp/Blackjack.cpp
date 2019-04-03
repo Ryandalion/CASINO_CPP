@@ -252,14 +252,19 @@ void Blackjack::startGame(Account *user) // Start Game
 
 		int player_card = 0;
 		int dealer_card = 0;
-
+		
 		int potSize = 0;
 
 		string players_hand = "";
 		string dealers_hand = "";
 		string dealerFirst = "";
+
+		bool revealHand = false;
+		bool firstBlackjack = false;
 		
 		int dealerFirstVal = 0;
+		
+		bool insuranceStatus = false;
 
 		bool deal = false;
 		bool firstHand = true;
@@ -275,6 +280,8 @@ void Blackjack::startGame(Account *user) // Start Game
 		bool dealerAceFirst = false;
 		bool dealerAce = false;
 		bool playerAce = false;
+
+		bool tieStatus = false;
 
 		bool playerBust = false;
 		bool dealerBust = false;
@@ -305,11 +312,13 @@ void Blackjack::startGame(Account *user) // Start Game
 		cout << "Dealing cards..." << endl;
 		cout << endl;
 		while (deal != true)
-		{	
+		{
 			cout << "----------------------------------------------------" << endl;
 			if (firstHand) // First Hand
 			{
 				bool dealerHidden = false; // Dealer only shows the first card and the second card remains hidden
+				bool p_blackjack = false;
+				bool d_blackjack = false;
 
 				for (int i = 0; i < 2; i++)
 				{
@@ -337,7 +346,7 @@ void Blackjack::startGame(Account *user) // Start Game
 
 					// Dealer draw
 					dealers_hand = dealers_hand + Cards.front().face + " of " + Cards.front().suit + "\n";
-					
+
 					if (Cards.front().value == 0)
 					{
 						dealer_card = 10;
@@ -373,6 +382,10 @@ void Blackjack::startGame(Account *user) // Start Game
 
 				}
 
+				p_blackjack = checkBlackjack(player.handValue);
+				d_blackjack = checkBlackjack(dealer_player.handValue);
+
+
 				cout << "Player's Hand: ";
 				cout << endl;
 				for (int i = 0; i < player.cards.size(); i++)
@@ -384,221 +397,343 @@ void Blackjack::startGame(Account *user) // Start Game
 				cout << "----------------------------------------------------" << endl;
 				cout << "Dealer's Hand: " << endl;
 				cout << dealerFirst << endl;
-				cout << "Dealer's Hand Value (Only one value showning): " << endl;
+				cout << "Dealer's Hand Value (Only one value showing): " << endl;
 				cout << dealerFirstVal << endl;
 
-				if (dealerAceFirst)
+				if (p_blackjack)
+				{
+					cout << "Player has blackjack" << endl;
+					firstBlackjack = true;
+					deal = true;
+					if (d_blackjack)
+					{
+						cout << "Dealer has blackjack" << endl;
+						cout << "Push" << endl;
+					}
+
+					else
+					{
+						cout << "Player wins" << endl;
+					}
+				}
+
+				if (dealerAceFirst) // Dealer has an Ace, ask user if they want to purchase insurance
 				{
 					cout << "----------------------------------------------------" << endl;
 					cout << "Dealer has an Ace" << endl;
-					placeInsurance(user);
-				}
-			}
-
-			// After First Round
-			if (!playerStand && !firstRound) // If player has chose to hit we allow execution, stop execution if the player chooses to stand
-			{
-				cout << endl;
-				cout << "Player's Hand: ";
-				players_hand = Cards.front().face + " of " +Cards.front().suit;
-				cout << players_hand << endl;
-				if (Cards.front().value == 0)
-				{
-					player_card = 10;
-					if (Cards.front().face == "Ace")
+					insuranceStatus = placeInsurance(user); // User is led to insurance menu
+					if (d_blackjack) // If the dealer has blackjack
 					{
-						cout << "*Ace is either be 1 or 11" << endl;
-						player_card = 11;
+						cout << "Dealer has blackjack" << endl; // Notify player that dealer has blackjack
+						firstBlackjack = true;
+						deal = true;
+						if (insuranceStatus) // If the player has insurance
+						{
+							cout << "Player has insurance" << endl;
+							cout << "Original Pot Size: " << potSize << endl;
+							potSize = (potSize * .50);
+							cout << "Payout after insurance: " << potSize << endl;
+							// Deduct half the player's bet
+						}
+						else // Player does not have insurance and loses bet
+						{
+							cout << "Dealer wins" << endl;
+						}
 					}
 				}
-
-				else
-				{
-					player_card = Cards.front().value;
-				}
-
-				player_1 = player_1 + player_card;
-				player.cards = players_hand;
-				player.handValue = player_1;
-				cout << "Player's Hand Value: " << player_1 << endl;
-				cout << "----------------------------------------------------" << endl;
-				Cards.erase(Cards.begin(), Cards.begin() + 1);	
 			}
 
+			// ---------------------------- AFTER FIRST HAND --------------------------------------
 
-			if (playerStand && !dealerStand)
+			if (!firstBlackjack && !deal) // If there is no blackjack in the first round we execute
 			{
-				if (17 <= dealer && dealer < 21)
+				cout << "We in here" << endl;
+				// After First Round
+				if (!playerStand && !firstRound) // Player hits and it's not the first round
 				{
-					dealerStay = true;
-				}
+					
+					cout << "player hit, not first round" << endl;
+					cout << endl;
+					cout << "Player's Hand: " << endl;
+				
+					for (int i = 0; i < player.cards.size(); i++)
+					{
+						cout << player.cards[i];
+					}
 
-				else
-				{
-					cout << "Dealer's Hand: ";
-					dealers_hand = Cards.front().face + " of " + Cards.front().suit;
-					cout << dealers_hand << endl;
+					players_hand = Cards.front().face + " of " + Cards.front().suit + "\n";
+					cout << players_hand << endl;
 					if (Cards.front().value == 0)
 					{
-						dealer_card = 10;
+						player_card = 10;
 
 						if (Cards.front().face == "Ace")
 						{
-							dealer_card = 11;
-							dealerAce = true;
+							if (player_1 > 10) // If the player's score is greater than 10, then the ace is worth 1 
+							{
+								player_card = 1;
+							}
+							else // If the player's score is less than 10, then the ace is worth 11
+							{
+								player_card = 11;
+							}
 						}
 					}
-					
+
+					else // Card is not a face card or Ace and we get the corresponding value
+					{
+						player_card = Cards.front().value;
+					}
+
+					player_1 = player_1 + player_card;
+					player.cards += players_hand;
+					player.handValue = player_1;
+					cout << "Player's Hand Value: " << player_1 << endl;
+					cout << "----------------------------------------------------" << endl;
+
+					Cards.erase(Cards.begin(), Cards.begin() + 1);
+
+
+				}
+
+
+
+				// Player has chosen to stand and dealer hits
+				if (playerStand && !dealerStand)
+				{
+					cout << "Player stand, dealer hit" << endl;
+
+					if (dealer >= 17) // If the dealer has a score of 17 or greater, the dealer stands
+					{
+						dealerStay = true; // Dealer stand set to true
+						dealerStandby = true; // Dealer stand by set to true
+					}
+
+					else // Else the dealer has a score less than 17 and the dealer will hit
+					{
+						dealers_hand = Cards.front().face + " of " + Cards.front().suit + "\n";
+						if (Cards.front().value == 0) // Dealer pulls a face card
+						{
+							dealer_card = 10; // Set card value to 10
+
+							if (Cards.front().face == "Ace") // If dealer pulled an ace
+							{
+								if (dealer > 10) // If the dealer's score exceeds 10, we set the card value (Ace) to 1
+								{
+									dealer_card = 1;
+								}
+								else // If the dealer's score is less than 10, we set the card value (Ace) to 11
+								{
+									dealer_card = 11;
+								}
+							}
+						}
+
+						else // Dealer did not pull a face card or Ace so we just get the normal corresponding value
+						{
+							dealer_card = Cards.front().value;
+						}
+
+						dealer = dealer + dealer_card; // Update the dealer's new hand value
+
+						for (int i = 0; i < dealers_hand.length(); i++)
+						{
+							dealer_player.cards.push_back(dealers_hand[i]);
+						}
+					}
+
+					cout << "Dealer's Hand: " << endl;
+					for (int i = 0; i < dealer_player.cards.size(); i++)
+					{
+						cout << dealer_player.cards[i];
+					}
+
+					dealer_player.handValue = dealer; // Set the dealer's object hand value to the new updated hand value
+					cout << "Dealer's Hand Value: " << dealer_player.handValue << endl;
+					cout << "----------------------------------------------------" << endl;
+					Cards.erase(Cards.begin(), Cards.begin() + 1); // Remove the cards from the deck
+				}
+
+
+				playerBust = checkBust(player_1); // Check if the player has bust
+				dealerBust = checkBust(dealer); // Check if the dealer has bust
+
+				playerBlackjack = checkBlackjack(player_1); // Check if the player has blackjack
+				dealerBlackjack = checkBlackjack(dealer); // Check if the dealer has blackjack
+
+				tieStatus = checkTie(dealer, player_1); // Check if there is a tie between the dealer and player
+
+				firstRound = false;
+
+				if (dealerStandby) // Dealer is on standby - Player is still in action or dealer has a score greater than 17
+				{
+					cout << "DEALER STANDBY" << endl;
+					cout << "Dealer's Hand: " << endl;
+
+					if (!playerStandby && !playerBust)
+					{
+						cout << dealerFirst << endl;
+
+						cout << "Dealer's Hand Value: " << dealerFirstVal << endl;
+					}
+
 					else
 					{
-						dealer_card = Cards.front().value;
+						for (int i = 0; i < dealer_player.cards.size(); i++)
+						{
+							cout << dealer_player.cards[i];
+						}
+
+						cout << "Dealer's Hand Value: " << dealer_player.handValue << endl;
 					}
-					dealer = dealer + dealer_card;
-					dealer_player.cards = dealers_hand;
-					dealer_player.handValue = dealer;
-					cout << "Dealer's Hand Value: " << dealer << endl;
+				}
+
+				if (playerStandby) // Player is on standby - Dealer is in action
+				{
+					cout << "PLAYER STANDBY" << endl;
+					cout << "Player's Hand: " << endl;
+					for (int i = 0; i < player.cards.size(); i++)
+					{
+						cout << player.cards[i];
+					}
+					cout << endl;
+					cout << "Player's Hand Value: " << player.handValue << endl;
+				}
+
+				if (playerBust && !deal) // Player has busted
+				{
+					if (dealerBust) // Check to see if dealer has busted also. If dealer has busted then it is a tie so we push.
+					{
+						tieStatus = true;
+						deal = true;
+					}
+
+					else // Player has bust and dealer has not bust so dealer wins
+					{
+						cout << "----------------------------------------------------" << endl;
+						cout << "Player has bust" << endl;
+						cout << "Dealer wins" << endl;
+						calculateWinnings(user, potSize);
+						deal = true;
+					}
+				}
+
+				else if (dealerBust && !deal) // Dealer has bust and player wins
+				{
 					cout << "----------------------------------------------------" << endl;
-					Cards.erase(Cards.begin(), Cards.begin() + 1);
-				}
-			}
-
-	
-			if (dealerStandby)
-			{
-				cout << "Dealer's Hand: " << endl;
-				cout << dealer_player.cards << endl;
-				cout << "Dealer's Hand Value: " << dealer_player.handValue << endl;
-			}
-
-			if (playerStandby)
-			{
-				cout << "Player's Hand: " << endl;
-				for (int i = 0; i < player.cards.size(); i++)
-				{
-					cout << player.cards[i];
-				}
-				cout << endl;
-				cout << "Player's Hand Value: " << player.handValue << endl;
-			}
-
-			playerBust = checkBust(player_1);
-			dealerBust = checkBust(dealer);
-
-			playerBlackjack = checkBlackjack(player_1);
-			dealerBlackjack = checkBlackjack(dealer);
-
-			firstRound = false;
-
-			if (playerBust)
-			{
-				cout << "----------------------------------------------------" << endl;
-				cout << "Player has bust" << endl;
-				cout << "Dealer wins" << endl;
-				calculateWinnings(user, potSize);
-				deal = true;
-			}
-
-			if (dealerBust) 
-			{
-				cout << "----------------------------------------------------" << endl;
-				cout << "Dealer has bust" << endl;
-				cout << "Player wins" << endl;
-				calculateWinnings(user, potSize);
-				deal = true;
-			}
-
-			if (playerBlackjack)
-			{
-				cout << "----------------------------------------------------" << endl;
-				cout << "Player has hit Blackjack" << endl;
-				calculateWinnings(user, potSize);
-				deal = true;
-			}
-
-			if (dealerBlackjack && !firstHand)
-			{
-				cout << "----------------------------------------------------" << endl;
-				cout << "Dealer has hit Blackjack" << endl;
-				dealerWin(user, potSize);
-				deal = true;
-			}
-
-			if (dealerStay)
-			{
-				cout << "----------------------------------------------------" << endl;
-				if (player_1 > dealer)
-				{
-					cout << "Player has won" << endl;
+					cout << "Dealer has bust" << endl;
+					cout << "Player wins" << endl;
 					calculateWinnings(user, potSize);
+					deal = true;
 				}
 
-				else
+				else if (playerBlackjack && !deal) // Player has blackjack
 				{
-					cout << "Dealer has won" << endl;
-					calculateWinnings(user, potSize);
+					if (dealerBlackjack) // Check if dealer has blackjack also. If dealer also has blackjack then it is a tie.
+					{
+						tieStatus = true;
+						deal = true;
+					}
+
+					else // Player has blackjack and dealer does not have blackjack and player wins
+					{
+						cout << "----------------------------------------------------" << endl;
+						cout << "Player has hit Blackjack" << endl;
+						calculateWinnings(user, potSize);
+						deal = true;
+					}
 				}
 
-				playerBust = false;
-				dealerBust = false;
-				playerBlackjack = false;
-				dealerBlackjack = false;
-				deal = true;
+				else if (dealerBlackjack && !firstHand && !deal && playerStandby) // Dealer hits blackjack
+				{
+					cout << "----------------------------------------------------" << endl;
+					cout << "Dealer has hit Blackjack" << endl;
+					dealerWin(user, potSize);
+					deal = true;
+				}
+
+				else if (tieStatus && !firstHand && !deal && playerStandby) // There exists a tie between the player and dealer
+				{
+					cout << "Player and Dealer have tied" << endl;
+					cout << "Push" << endl;
+					deal = true;
+				}
+
+				else if (dealerStandby && playerStandby && !deal) // Both player and dealer are standing
+				{
+					cout << "----------------------------------------------------" << endl;
+					if (player_1 > dealer) // If player has a score higher than dealer then player has won
+					{
+						cout << "Player has won" << endl;
+						calculateWinnings(user, potSize);
+					}
+
+					else // Dealer has won
+					{
+						cout << "Dealer has won" << endl;
+						calculateWinnings(user, potSize);
+					}
+
+					deal = true;
+				}
+
+
+				else if (!deal && !playerStandby)
+				{
+					bool repeat = true;
+
+					while (repeat == true)
+					{
+						cout << "---------------------------------------------------" << endl;
+						cout << "Please make a selection" << endl;
+						cout << "1. Hit" << endl;
+						cout << "2. Stand" << endl;
+						cout << "3. View chip stack" << endl;
+						cout << "4. View pot size" << endl;
+						cout << "----------------------------------------------------" << endl;
+						int choice = userInput.inputValidate(1, 3);
+						cout << "----------------------------------------------------" << endl;
+						if (choice == 1)
+						{
+							potSize += placeBet(user);
+							dealerStand = true;
+							playerStand = false;
+							dealerStandby = true;
+							playerStandby = false;
+							repeat = false;
+						}
+
+						else if (choice == 2)
+						{
+							cout << "You have chosen to stand" << endl;
+							cout << endl;
+							playerStand = true;
+							dealerStand = false;
+							playerStandby = true;
+							dealerStandby = false;
+							repeat = false;
+						}
+
+						else if (choice == 3)
+						{
+							cout << "Current chip stack: $" << chipStack << endl;
+							cout << endl;
+						}
+
+						else if (choice == 4)
+						{
+							cout << "Current pot size: $" << potSize << endl;
+							cout << endl;
+						}
+					}
+
+				}
+
+				firstHand = false;
 			}
 
-			if (!playerBust && !dealerBust && !dealerBlackjack && !playerBlackjack && !playerStand)
-			{
-				bool repeat = true;
-
-				while (repeat == true)
-				{
-					cout << "---------------------------------------------------" << endl;
-					cout << "Please make a selection" << endl;
-					cout << "1. Hit" << endl;
-					cout << "2. Stand" << endl;
-					cout << "3. View chip stack" << endl;
-					cout << "4. View pot size" << endl;
-					cout << "----------------------------------------------------" << endl;
-					int choice = userInput.inputValidate(1, 3);
-					cout << "----------------------------------------------------" << endl;
-					if (choice == 1)
-					{
-						potSize += placeBet(user);
-						dealerStand = true;
-						playerStand = false;
-						dealerStandby = true;
-						playerStandby = false;
-						repeat = false;
-					}
-
-					else if (choice == 2)
-					{
-						cout << "You have chosen to stand" << endl;
-						cout << endl;
-						playerStand = true;
-						dealerStand = false;
-						playerStandby = true;
-						dealerStandby = false;
-						repeat = false;
-					}
-
-					else if(choice == 3)
-					{
-						cout << "Current chip stack: $" << chipStack << endl;
-						cout << endl;
-					}
-
-					else if(choice == 4)
-					{
-						cout << "Current pot size: $" << potSize << endl;
-						cout << endl;
-					} 
-				}
-
-			}
-
-			firstHand = false;
-
-
+			cout << "PLAYER'S SCORE: " << player_1 << endl;
+			cout << "DEALER'S SCORE: " << dealer << endl;
 		}
 
 		cout << "----------------------------------------------------" << endl;
@@ -663,10 +798,21 @@ bool Blackjack::checkBlackjack(int hand)
 	return blackjack;
 }
 
-void Blackjack::placeInsurance(Account *user)
+bool Blackjack::checkTie(int dealerHand, int playerHand)
+{
+	bool tie = false;
+	if (dealerHand == playerHand)
+	{
+		tie = true;
+	}
+
+	return tie;
+}
+
+bool Blackjack::placeInsurance(Account *user)
 {
 
-	insurance = false;
+	bool insurance = false;
 	bool insuranceLoop = false;
 	while (insuranceLoop != true)
 	{
@@ -708,6 +854,8 @@ void Blackjack::placeInsurance(Account *user)
 			cout << "Insurance ensures that the player wins " << endl;
 		}
 	}
+
+	return insurance;
 }
 
 int Blackjack::placeBet(Account *user)

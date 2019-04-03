@@ -1,4 +1,5 @@
 ﻿  Blackjack.cpp
 c:\users\ryan\desktop\casino\casino.cpp\casino.cpp\blackjack.cpp(13): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-c:\users\ryan\desktop\casino\casino.cpp\casino.cpp\blackjack.cpp(853): warning C4715: 'Blackjack::insufficientFunds': not all control paths return a value
+c:\users\ryan\desktop\casino\casino.cpp\casino.cpp\blackjack.cpp(434): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+c:\users\ryan\desktop\casino\casino.cpp\casino.cpp\blackjack.cpp(1001): warning C4715: 'Blackjack::insufficientFunds': not all control paths return a value
   Casino.cpp.vcxproj -> C:\Users\Ryan\Desktop\CASINO\Casino.cpp\x64\Debug\Casino.cpp.exe

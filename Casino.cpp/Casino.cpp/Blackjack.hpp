@@ -23,11 +23,12 @@ public:
 	int placeBet(Account *user);
 	void currentBet();
 	bool insufficientFunds(Account *user);
-	void placeInsurance(Account *user);
+	bool placeInsurance(Account *user);
 	void buyChips(Account *user);
 	void calculateWinnings(Account *user, int potSize);
 	void dealerWin(Account *user, int potSize);
 
+	bool checkTie(int hand_1, int hand_2);
 	bool checkBust(int hand);
 	bool checkBlackjack(int hand);
 
@@ -41,7 +42,6 @@ public:
 		string cards;
 		int handValue;
 	};
-
 
 	~Blackjack();
 
